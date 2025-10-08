@@ -1,0 +1,3 @@
+These are just some notes.
+Not a code file.
+Should be skipped by the hook.
