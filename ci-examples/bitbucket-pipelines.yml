@@ -1,0 +1,82 @@
+# Bitbucket Pipelines: LLM Evaluation Suite
+# Save as bitbucket-pipelines.yml in your project root
+
+image: node:20
+
+definitions:
+  caches:
+    npm: node_modules
+
+pipelines:
+  default:
+    - step:
+        name: LLM Quality Check
+        caches:
+          - npm
+        script:
+          - echo "📦 Installing dependencies..."
+          - npm ci
+
+          - echo "🤖 Running LLM evaluation..."
+          - npm run eval
+
+          - echo "📊 Checking results..."
+          - npm run check-results
+
+          - echo "🔒 Enforcing quality gate..."
+          - npm run enforce-quality
+
+          - echo "💰 Estimating costs..."
+          - npm run estimate-cost
+        artifacts:
+          - test-results.json
+          - .promptfoo/**
+
+  branches:
+    main:
+      - step:
+          name: LLM Quality Check (Main)
+          caches:
+            - npm
+          script:
+            - npm ci
+            - npm run eval
+            - npm run check-results
+            - npm run enforce-quality
+            - npm run estimate-cost
+          artifacts:
+            - test-results.json
+            - .promptfoo/**
+
+    develop:
+      - step:
+          name: LLM Quality Check (Develop)
+          caches:
+            - npm
+          script:
+            - npm ci
+            - npm run eval
+            - npm run check-results
+            - npm run enforce-quality
+          artifacts:
+            - test-results.json
+
+  pull-requests:
+    '**':
+      - step:
+          name: LLM Quality Check (PR)
+          caches:
+            - npm
+          script:
+            - npm ci
+            - npm run eval
+            - npm run check-results
+            - npm run enforce-quality
+          artifacts:
+            - test-results.json
+            - .promptfoo/**
+
+# Environment variables (set in Bitbucket repository settings):
+# - ANTHROPIC_API_KEY
+# - CLAUDE_MODEL (optional)
+# - MIN_PASS_RATE (optional, defaults to 70)

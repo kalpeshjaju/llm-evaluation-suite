@@ -1,0 +1,27 @@
+# Simple Evaluation Test
+# Tests a single prompt with basic assertions
+
+description: "Simple test: Generate a greeting function"
+
+prompts:
+  - "Create a TypeScript function called greet() that takes a name and returns 'Hello, {name}!'"
+
+providers:
+  - anthropic:messages:claude-sonnet-4-20250514
+
+tests:
+  - assert:
+      - type: javascript
+        value: |
+          // Check basic requirements
+          const hasGreet = /greet/i.test(output);
+          const hasReturn = /return/i.test(output);
+
+          return {
+            pass: hasGreet && hasReturn,
+            score: hasGreet && hasReturn ? 1 : 0,
+            reason: hasGreet && hasReturn ? "Has greet function with return" : "Missing requirements"
+          };
+
+      - type: llm-rubric
+        value: "Does this function meet the requirements? Score 0-10, pass if >= 7"

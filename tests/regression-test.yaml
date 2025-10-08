@@ -1,0 +1,55 @@
+# Regression Testing Pattern
+# Compare current output against expected "golden" output
+
+description: "Regression test: Ensure consistent quality over time"
+
+prompts:
+  - file://prompts/create-api-endpoint.txt
+
+providers:
+  - anthropic:messages:claude-sonnet-4-20250514
+
+tests:
+  - description: "API endpoint should match golden standard"
+    vars:
+      golden_output: |
+        // Expected structure
+        export async function handleRequest(req: Request): Promise<Response> {
+          try {
+            // validation
+            // processing
+            return new Response(JSON.stringify(data), { status: 200 });
+          } catch (error) {
+            return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+          }
+        }
+
+    assert:
+      - type: llm-rubric
+        value: |
+          Compare the actual output to this golden standard structure:
+          {{golden_output}}
+
+          Does the actual output:
+          1. Follow similar structure?
+          2. Include error handling?
+          3. Use proper TypeScript types?
+          4. Return appropriate Response objects?
+
+          Score 0-10, pass if >= 8
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+      - type: javascript
+        value: |
+          // Check for key patterns
+          const hasErrorHandling = /try.*catch/s.test(output);
+          const hasResponse = /Response/g.test(output);
+          const hasTypes = /:\s*(Request|Response)/g.test(output);
+
+          const score = [hasErrorHandling, hasResponse, hasTypes].filter(Boolean).length / 3;
+
+          return {
+            pass: score >= 0.66,
+            score: score,
+            reason: `Has ${Math.round(score * 100)}% of expected patterns`
+          };

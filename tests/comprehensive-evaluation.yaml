@@ -1,0 +1,101 @@
+# Comprehensive Evaluation
+# Tests multiple aspects: correctness, quality, security, token efficiency
+
+description: "Comprehensive evaluation: Authentication middleware"
+
+prompts:
+  - |
+    Create a TypeScript authentication middleware for Express that:
+    - Validates JWT tokens from Authorization header
+    - Checks token expiration
+    - Handles errors with proper HTTP status codes
+    - Adds user info to request object
+    - Is token-efficient (<80 lines)
+
+providers:
+  - anthropic:messages:claude-sonnet-4-20250514
+
+tests:
+  - description: "Correctness & Completeness"
+    assert:
+      - type: llm-rubric
+        value: |
+          Evaluate CORRECTNESS (does it work?):
+          1. Validates JWT from Authorization header? (Required)
+          2. Checks token expiration? (Required)
+          3. Adds user to request object? (Required)
+
+          Score 0-10. All required features must be present for score >= 7.
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+  - description: "Code Quality"
+    assert:
+      - type: llm-rubric
+        value: |
+          Evaluate CODE QUALITY:
+          1. Follows TypeScript best practices?
+          2. Proper naming conventions (camelCase)?
+          3. No wildcard imports?
+          4. Function is <100 lines?
+          5. Readable and maintainable?
+
+          Score 0-10. Pass if >= 8 (strict quality bar).
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+  - description: "Error Handling"
+    assert:
+      - type: llm-rubric
+        value: |
+          Evaluate ERROR HANDLING:
+          1. Handles missing token (401)?
+          2. Handles invalid token (401)?
+          3. Handles expired token (401)?
+          4. Error messages are contextual, not generic?
+          5. Uses proper HTTP status codes?
+
+          Score 0-10. Pass if >= 7.
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+  - description: "Security"
+    assert:
+      - type: llm-rubric
+        value: |
+          Evaluate SECURITY:
+          1. No hardcoded secrets?
+          2. Proper error messages (no sensitive data leaks)?
+          3. Token validation is secure?
+          4. No obvious vulnerabilities?
+
+          Score 0-10. ANY security issue = fail (< 7).
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+  - description: "Token Efficiency"
+    assert:
+      - type: javascript
+        value: |
+          const lines = output.split('\n').filter(line => line.trim()).length;
+          const passed = lines <= 80;
+
+          return {
+            pass: passed,
+            score: passed ? 1 : 0,
+            reason: `Code is ${lines} lines (limit: 80). ${passed ? '✅' : '❌'}`
+          };
+
+      - type: llm-rubric
+        value: |
+          Is the code TOKEN EFFICIENT?
+          1. No redundant code?
+          2. No overly verbose comments?
+          3. Concise but not cryptic?
+          4. Could this be shorter without losing clarity?
+
+          Score 0-10. Pass if >= 7.
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+# Require ALL tests to pass
+defaultTest:
+  options:
+    provider:
+      temperature: 0.3
+    threshold: 0.7  # 70% pass rate required

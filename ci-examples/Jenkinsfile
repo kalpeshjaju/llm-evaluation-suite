@@ -1,0 +1,79 @@
+// Jenkins Pipeline: LLM Evaluation Suite
+// Save as Jenkinsfile in your project root
+
+pipeline {
+    agent {
+        docker {
+            image 'node:20'
+        }
+    }
+
+    environment {
+        ANTHROPIC_API_KEY = credentials('anthropic-api-key')
+        CLAUDE_MODEL = 'claude-sonnet-4-20250514'
+        MIN_PASS_RATE = '70'
+    }
+
+    stages {
+        stage('Setup') {
+            steps {
+                echo '📦 Installing dependencies...'
+                sh 'npm ci'
+            }
+        }
+
+        stage('LLM Evaluation') {
+            steps {
+                echo '🤖 Running LLM evaluation...'
+                sh 'npm run eval'
+            }
+        }
+
+        stage('Check Results') {
+            steps {
+                echo '📊 Checking evaluation results...'
+                sh 'npm run check-results'
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                echo '🔒 Enforcing quality threshold...'
+                sh 'npm run enforce-quality'
+            }
+        }
+
+        stage('Cost Report') {
+            steps {
+                echo '💰 Generating cost report...'
+                sh 'npm run estimate-cost'
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'test-results.json, .promptfoo/**/*',
+                             fingerprint: true,
+                             allowEmptyArchive: true
+
+            // Publish results
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: '.promptfoo',
+                reportFiles: '**/*',
+                reportName: 'LLM Evaluation Report'
+            ])
+        }
+
+        failure {
+            echo '❌ LLM evaluation failed - quality threshold not met'
+        }
+
+        success {
+            echo '✅ LLM evaluation passed - code meets quality standards'
+        }
+    }
+}

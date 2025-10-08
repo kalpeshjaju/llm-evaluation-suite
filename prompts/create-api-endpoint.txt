@@ -1,0 +1,9 @@
+Create a TypeScript API endpoint handler function that:
+1. Takes a Request object
+2. Validates the request body
+3. Processes the data
+4. Returns a Response object with JSON
+5. Includes error handling with contextual error messages
+6. Uses proper TypeScript types (no 'any')
+
+The endpoint should handle POST requests for creating a user profile.

@@ -1,0 +1,74 @@
+# CircleCI: LLM Evaluation Suite
+# Save as .circleci/config.yml in your project root
+
+version: 2.1
+
+orbs:
+  node: circleci/node@5.1
+
+jobs:
+  llm-evaluation:
+    docker:
+      - image: cimg/node:20.0
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
+
+      - run:
+          name: Install dependencies
+          command: npm ci
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+
+      - run:
+          name: Run LLM evaluation
+          command: |
+            echo "🤖 Running LLM evaluation..."
+            npm run eval
+
+      - run:
+          name: Check results
+          command: |
+            echo "📊 Checking evaluation results..."
+            npm run check-results
+
+      - run:
+          name: Enforce quality gate
+          command: |
+            echo "🔒 Enforcing quality threshold..."
+            npm run enforce-quality
+
+      - run:
+          name: Estimate costs
+          command: |
+            echo "💰 Estimating API costs..."
+            npm run estimate-cost
+          when: always
+
+      - store_artifacts:
+          path: test-results.json
+          destination: evaluation-results
+
+      - store_artifacts:
+          path: .promptfoo/
+          destination: promptfoo-cache
+
+workflows:
+  version: 2
+  evaluate:
+    jobs:
+      - llm-evaluation:
+          filters:
+            branches:
+              only:
+                - main
+                - develop
+          context:
+            - llm-evaluation  # Add ANTHROPIC_API_KEY here

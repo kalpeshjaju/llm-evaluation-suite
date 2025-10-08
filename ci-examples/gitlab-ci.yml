@@ -1,0 +1,64 @@
+# GitLab CI/CD: LLM Evaluation Suite
+# Save as .gitlab-ci.yml in your project root
+
+stages:
+  - test
+  - quality
+  - report
+
+variables:
+  MIN_PASS_RATE: "70"
+
+# Cache node_modules
+cache:
+  paths:
+    - node_modules/
+
+llm-evaluation:
+  stage: test
+  image: node:20
+  before_script:
+    - npm ci
+  script:
+    - echo "🤖 Running LLM evaluation..."
+    - npm run eval
+  artifacts:
+    paths:
+      - test-results.json
+      - .promptfoo/
+    expire_in: 30 days
+    when: always
+  allow_failure: false
+  only:
+    - main
+    - develop
+    - merge_requests
+
+quality-gate:
+  stage: quality
+  image: node:20
+  dependencies:
+    - llm-evaluation
+  script:
+    - echo "🔒 Checking quality threshold..."
+    - npm run check-results
+    - npm run enforce-quality
+  allow_failure: false
+  only:
+    - main
+    - develop
+    - merge_requests
+
+cost-report:
+  stage: report
+  image: node:20
+  dependencies:
+    - llm-evaluation
+  script:
+    - echo "💰 Generating cost report..."
+    - npm run estimate-cost
+  allow_failure: true
+  only:
+    - main
+    - develop
+    - merge_requests

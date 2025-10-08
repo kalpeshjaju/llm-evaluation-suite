@@ -1,0 +1,101 @@
+# PromptFoo Configuration Example
+# This evaluates Claude's code generation capabilities
+
+description: "Example LLM evaluation: Email validator function"
+
+# Define the prompts to test
+prompts:
+  - |
+    Create a TypeScript function that validates email addresses.
+    Requirements:
+    - Must check for valid email format
+    - Must handle edge cases (empty, null, malformed)
+    - Must include error messages with context
+    - Must be well-typed (no 'any')
+    - Must include JSDoc comments
+
+# Define the LLM provider to test
+providers:
+  - id: anthropic:messages:claude-sonnet-4-20250514
+    config:
+      temperature: 0.3
+      max_tokens: 2000
+
+# Define test cases
+tests:
+  - description: "Email validator implementation"
+    vars:
+      task: "email validation function"
+
+    # Assertions using Claude-as-Judge
+    assert:
+      # Check if it's valid TypeScript
+      - type: javascript
+        value: |
+          const output = context.vars.output || output;
+
+          // Basic syntax checks
+          const hasFunction = /function|const.*=.*\(/i.test(output);
+          const hasValidation = /email|@/i.test(output);
+
+          return {
+            pass: hasFunction && hasValidation,
+            score: hasFunction && hasValidation ? 1 : 0,
+            reason: hasFunction && hasValidation
+              ? "Contains function and email validation logic"
+              : "Missing function or validation logic"
+          };
+
+      # Custom LLM-as-judge evaluation
+      - type: llm-rubric
+        value: |
+          Evaluate this code on:
+          1. Does it validate email format correctly?
+          2. Does it handle edge cases (null, empty, malformed)?
+          3. Are error messages contextual and helpful?
+          4. Is TypeScript typing strict (no 'any')?
+          5. Is it token-efficient (<100 lines)?
+
+          Score out of 10. Passing score: 7+
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+  - description: "Error handling quality"
+    vars:
+      task: "error handling in email validator"
+
+    assert:
+      - type: llm-rubric
+        value: |
+          Does the code include:
+          1. Proper error handling for invalid inputs
+          2. Contextual error messages (not just "invalid")
+          3. Input validation before processing
+
+          Score out of 10. Passing score: 7+
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+  - description: "Code quality standards"
+    vars:
+      task: "code quality assessment"
+
+    assert:
+      - type: llm-rubric
+        value: |
+          Evaluate against Kalpesh's coding standards:
+          1. File/function size (<100 lines)
+          2. No wildcard imports
+          3. Consistent naming (camelCase)
+          4. Token efficient
+          5. Production-ready
+
+          Score out of 10. Passing score: 8+
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+# Output configuration
+outputPath: ./test-results.json
+
+# Default test options
+defaultTest:
+  options:
+    provider:
+      temperature: 0.3
