@@ -1,0 +1,158 @@
+# UI/UX Audit Tool - Report Quality Evaluation
+# Evaluates the quality of LLM-generated UI/UX audit reports
+
+description: "UI/UX Audit Tool Report Quality Evaluation"
+
+prompts:
+  - file:///Users/kalpeshjaju/Library/CloudStorage/GoogleDrive-kalpesh@whatgoesaroundcomesaround.in/My Drive/claude_kalpesh/projects/ui-ux-audit-tool/reports/revaaforyou.com_2025-10-05_16-59-24/report.md
+
+providers:
+  - id: anthropic:messages:claude-sonnet-4-20250514
+    config:
+      temperature: 0.2
+      max_tokens: 1000
+
+tests:
+  - description: "Report Completeness & Structure"
+    assert:
+      - type: llm-rubric
+        value: |
+          Evaluate the completeness and structure of this UI/UX audit report:
+
+          1. Essential Sections: Does it include metadata (URL, date), screenshots, overall score, category breakdown, and detailed findings?
+          2. Structure: Is the report well-organized and easy to navigate?
+          3. Visual Elements: Are scores clearly displayed with proper formatting?
+          4. Categorization: Are issues properly categorized by severity (Critical, High, Medium, Low)?
+          5. Completeness: Does each category have findings with scores?
+
+          Score 0-10 (Pass if >= 7)
+          - 0-3: Missing major sections or poorly structured
+          - 4-6: Basic structure but incomplete
+          - 7-8: Well-structured with all key sections
+          - 9-10: Exemplary organization and completeness
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+  - description: "Finding Quality & Actionability"
+    assert:
+      - type: llm-rubric
+        value: |
+          Evaluate the quality and actionability of the audit findings:
+
+          1. Specificity: Are issues described specifically (not generic)?
+          2. Evidence: Are findings backed by concrete examples (counts, elements)?
+          3. Recommendations: Does each finding have actionable fix recommendations?
+          4. Clarity: Are recommendations clear enough to implement?
+          5. Prioritization: Are issues properly prioritized by severity?
+
+          Score 0-10 (Pass if >= 7)
+          - 0-3: Vague, generic findings with no actionable guidance
+          - 4-6: Some specific findings but weak recommendations
+          - 7-8: Clear, specific findings with actionable fixes
+          - 9-10: Exceptional detail and implementation guidance
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+  - description: "Scoring System Validity"
+    assert:
+      - type: javascript
+        value: |
+          // Check that scores are present and valid
+          const hasOverallScore = /\*\*\s*\d+\/100\s*\*\*/.test(output);
+          const hasCategoryScores = /\|\s*\w+.*\|\s*\d+\/100\s*\|/.test(output);
+          const hasScoreBreakdown = /Score Breakdown/i.test(output);
+          const hasWeightedScores = /Weight/.test(output);
+
+          const score = [hasOverallScore, hasCategoryScores, hasScoreBreakdown, hasWeightedScores]
+            .filter(Boolean).length / 4;
+
+          return {
+            pass: score >= 0.75,
+            score: score,
+            reason: `Scoring markers: ${Math.round(score * 100)}% (Overall: ${hasOverallScore}, Categories: ${hasCategoryScores}, Breakdown: ${hasScoreBreakdown}, Weights: ${hasWeightedScores})`
+          };
+
+      - type: llm-rubric
+        value: |
+          Evaluate the scoring system:
+
+          1. Clarity: Are scores clearly displayed and easy to understand?
+          2. Breakdown: Is there a clear breakdown by category with weights?
+          3. Consistency: Do category scores align with reported issues?
+          4. Scale: Is the 0-100 scale used appropriately?
+          5. Context: Does the overall score make sense given the findings?
+
+          Score 0-10 (Pass if >= 7)
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+  - description: "Accessibility Analysis Quality"
+    assert:
+      - type: llm-rubric
+        value: |
+          Evaluate the accessibility analysis:
+
+          1. Coverage: Does it check semantic HTML, ARIA, form labels, buttons?
+          2. Specificity: Are accessibility issues described with element counts?
+          3. Standards: Are WCAG or other standards referenced?
+          4. Severity: Are accessibility issues properly marked as high/critical?
+          5. Fixes: Are accessibility fix recommendations clear and specific?
+
+          Score 0-10 (Pass if >= 7)
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+  - description: "Performance Analysis Quality"
+    assert:
+      - type: llm-rubric
+        value: |
+          Evaluate the performance analysis:
+
+          1. Metrics: Does it mention Core Web Vitals or other performance metrics?
+          2. Issues: Are performance bottlenecks identified (images, render-blocking, etc.)?
+          3. Specificity: Are performance issues described concretely?
+          4. Impact: Is the performance impact clear?
+          5. Optimization: Are specific optimization recommendations provided?
+
+          Score 0-10 (Pass if >= 7)
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+  - description: "Visual Evidence & Screenshots"
+    assert:
+      - type: javascript
+        value: |
+          // Check for screenshot references
+          const hasDesktopScreenshot = /Desktop.*Screenshot|screenshot-desktop/.test(output);
+          const hasTabletScreenshot = /Tablet.*Screenshot|screenshot-tablet/.test(output);
+          const hasMobileScreenshot = /Mobile.*Screenshot|screenshot-mobile/.test(output);
+          const hasViewportInfo = /1920x1080|768x1024|375x667/.test(output);
+
+          const score = [hasDesktopScreenshot, hasTabletScreenshot, hasMobileScreenshot, hasViewportInfo]
+            .filter(Boolean).length / 4;
+
+          return {
+            pass: score >= 0.75,
+            score: score,
+            reason: `Screenshot evidence: ${Math.round(score * 100)}% (Desktop: ${hasDesktopScreenshot}, Tablet: ${hasTabletScreenshot}, Mobile: ${hasMobileScreenshot}, Viewports: ${hasViewportInfo})`
+          };
+
+  - description: "Professional Quality & Polish"
+    assert:
+      - type: llm-rubric
+        value: |
+          Evaluate the professional quality of the report:
+
+          1. Presentation: Is the report professionally formatted and polished?
+          2. Language: Is the writing clear, professional, and error-free?
+          3. Consistency: Is formatting and terminology consistent throughout?
+          4. Usability: Is the report easy to read and act upon?
+          5. Completeness: Does it feel like a professional audit deliverable?
+
+          Score 0-10 (Pass if >= 7)
+          - 0-3: Poor formatting, unclear, unprofessional
+          - 4-6: Basic but lacks polish
+          - 7-8: Professional and well-presented
+          - 9-10: Agency-quality deliverable
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+defaultTest:
+  options:
+    threshold: 0.7  # 70% passing score
+
+outputPath: ./outputs/ui-ux-audit-evaluation-results.json
