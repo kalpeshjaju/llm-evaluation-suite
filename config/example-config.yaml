@@ -18,7 +18,6 @@ prompts:
 providers:
   - id: anthropic:messages:claude-sonnet-4-20250514
     config:
-      apiKey: ${ANTHROPIC_API_KEY}
       temperature: 0.3
       max_tokens: 2000
 
