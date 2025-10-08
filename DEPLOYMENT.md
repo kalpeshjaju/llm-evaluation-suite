@@ -12,9 +12,10 @@
 ## Setup Complete
 - ✅ Repository created
 - ✅ Code pushed
-- ✅ API key in GitHub Secrets
+- ✅ API key in GitHub Secrets (updated)
 - ✅ Workflow configured
+- ✅ PromptFoo configs updated with API key
 
 ---
 
-**Last Updated**: 2025-10-08
+**Last Updated**: 2025-10-08 16:03
