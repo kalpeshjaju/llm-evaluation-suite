@@ -1,0 +1,42 @@
+# Default PromptFoo Configuration
+# This is used by pre-commit hook and CI/CD
+# For a lightweight pre-commit check
+
+description: "LLM Code Generation Quality Check"
+
+# Test basic code generation
+prompts:
+  - "Create a simple TypeScript function that adds two numbers"
+
+providers:
+  - id: anthropic:messages:claude-sonnet-4-20250514
+    config:
+      temperature: 0.3
+      max_tokens: 500
+
+tests:
+  - description: "Basic code generation test"
+    assert:
+      - type: javascript
+        value: |
+          // Check if output contains function-like code
+          const hasFunction = /function|const.*=|=>/.test(output);
+          const hasReturn = /return/.test(output);
+
+          return {
+            pass: hasFunction,
+            score: hasFunction ? 1 : 0,
+            reason: hasFunction ? "Generated valid function code" : "No function found"
+          };
+
+      - type: llm-rubric
+        value: |
+          Does this code:
+          1. Contain a function that adds two numbers?
+          2. Look syntactically correct?
+          3. Follow basic TypeScript conventions?
+
+          Score 0-10. Pass if >= 7.
+        provider: anthropic:messages:claude-sonnet-4-20250514
+
+outputPath: ./test-results.json
