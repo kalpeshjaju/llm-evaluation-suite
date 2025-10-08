@@ -5,6 +5,7 @@
  */
 
 import { readFileSync, existsSync } from 'fs';
+import { fileURLToPath } from 'url';
 
 const RESULTS_FILE = 'test-results.json';
 
@@ -30,15 +31,18 @@ function estimateCost() {
     return;
   }
 
-  const results = JSON.parse(readFileSync(RESULTS_FILE, 'utf8'));
+  const data = JSON.parse(readFileSync(RESULTS_FILE, 'utf8'));
+
+  // Handle nested results structure
+  const results = data.results?.results || [];
 
   let totalInputTokens = 0;
   let totalOutputTokens = 0;
   let numEvaluations = 0;
 
   // Estimate tokens from results
-  if (results.results && Array.isArray(results.results)) {
-    numEvaluations = results.results.length;
+  if (Array.isArray(results)) {
+    numEvaluations = results.length;
 
     // Rough estimation: ~500 input, ~300 output per evaluation
     totalInputTokens = numEvaluations * 500;
@@ -78,7 +82,9 @@ function estimateCost() {
 }
 
 // Run if called directly
-if (import.meta.url === `file://${process.argv[1]}`) {
+const __filename = fileURLToPath(import.meta.url);
+
+if (process.argv[1] === __filename) {
   try {
     estimateCost();
   } catch (error) {

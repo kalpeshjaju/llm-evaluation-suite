@@ -5,6 +5,7 @@
  */
 
 import { readFileSync, existsSync } from 'fs';
+import { fileURLToPath } from 'url';
 
 const RESULTS_FILE = 'test-results.json';
 
@@ -14,7 +15,10 @@ function checkResults() {
     process.exit(1);
   }
 
-  const results = JSON.parse(readFileSync(RESULTS_FILE, 'utf8'));
+  const data = JSON.parse(readFileSync(RESULTS_FILE, 'utf8'));
+
+  // Handle nested results structure
+  const results = data.results?.results || [];
 
   // Parse results
   const stats = {
@@ -25,13 +29,13 @@ function checkResults() {
     totalCost: 0
   };
 
-  if (results.results && Array.isArray(results.results)) {
-    stats.total = results.results.length;
-    stats.passed = results.results.filter(r => r.success).length;
+  if (Array.isArray(results)) {
+    stats.total = results.length;
+    stats.passed = results.filter(r => r.success).length;
     stats.failed = stats.total - stats.passed;
 
     // Calculate average score
-    const scores = results.results
+    const scores = results
       .map(r => r.score || 0)
       .filter(s => s > 0);
 
@@ -80,7 +84,9 @@ function checkResults() {
 }
 
 // Run if called directly
-if (import.meta.url === `file://${process.argv[1]}`) {
+const __filename = fileURLToPath(import.meta.url);
+
+if (process.argv[1] === __filename) {
   try {
     checkResults();
   } catch (error) {

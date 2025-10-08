@@ -5,6 +5,7 @@
  */
 
 import { readFileSync, existsSync } from 'fs';
+import { fileURLToPath } from 'url';
 
 const RESULTS_FILE = 'test-results.json';
 const MIN_PASS_RATE = parseFloat(process.env.MIN_PASS_RATE || '70');
@@ -15,15 +16,18 @@ function enforceQuality() {
     process.exit(1);
   }
 
-  const results = JSON.parse(readFileSync(RESULTS_FILE, 'utf8'));
+  const data = JSON.parse(readFileSync(RESULTS_FILE, 'utf8'));
+
+  // Handle nested results structure
+  const results = data.results?.results || [];
 
   // Calculate pass rate
   let passed = 0;
   let total = 0;
 
-  if (results.results && Array.isArray(results.results)) {
-    total = results.results.length;
-    passed = results.results.filter(r => r.success).length;
+  if (Array.isArray(results)) {
+    total = results.length;
+    passed = results.filter(r => r.success).length;
   }
 
   const passRate = total > 0 ? (passed / total) * 100 : 0;
@@ -45,7 +49,9 @@ function enforceQuality() {
 }
 
 // Run if called directly
-if (import.meta.url === `file://${process.argv[1]}`) {
+const __filename = fileURLToPath(import.meta.url);
+
+if (process.argv[1] === __filename) {
   try {
     enforceQuality();
   } catch (error) {
