@@ -1,0 +1,104 @@
+description: "Brand Design Agent - AI Brand Strategy Quality Evaluation"
+
+prompts:
+  - |
+    Build an AI-powered brand design agent that researches markets, audits brands, and creates comprehensive brand strategies.
+
+    Requirements:
+    - Research: Market trends, competitor analysis, customer personas
+    - Audit: Score brand across 4 dimensions, identify gaps and opportunities
+    - Strategy: Generate complete brand book with positioning, messaging, visual direction, 12-month roadmap
+    - LLM-agnostic: Works with Claude or ChatGPT
+    - Adaptive: Auto-detects brand type and customizes workflow
+    - Outputs: Both JSON (machine-readable) and Markdown (human-readable) reports
+
+    The solution should follow these standards:
+    - TypeScript strict mode
+    - Files <500 lines
+    - Modular agents (Researcher, Auditor, Strategist)
+    - Type-safe with full interface definitions
+    - Production-ready for real brands
+
+providers:
+  - anthropic:messages:claude-sonnet-4-20250514
+    config:
+      temperature: 0.3
+      max_tokens: 4000
+
+tests:
+  - description: "Evaluate brand-design-agent codebase quality"
+    assert:
+      - type: llm-rubric
+        value: |
+          Evaluate the brand-design-agent project on a scale of 0-10 for each criterion:
+
+          1. CORRECTNESS (0-10):
+          - Does it successfully conduct market and audience research?
+          - Does the brand audit provide meaningful scores and insights?
+          - Does the strategy output include all required components?
+          - Does brand type classification work accurately?
+
+          2. CODE QUALITY (0-10):
+          - Files under 500 lines?
+          - Functions under 100 lines?
+          - Proper TypeScript usage (strict mode, typed interfaces)?
+          - Clean separation between agents (Researcher, Auditor, Strategist)?
+          - Follows ES modules (import/export)?
+
+          3. ARCHITECTURE (0-10):
+          - Modular design (each agent is independent)?
+          - LLM adapter properly abstracts Claude/OpenAI differences?
+          - Easy to extend (add new brand types, agents, deliverables)?
+          - Orchestrator cleanly coordinates workflow?
+
+          4. LLM INTEGRATION (0-10):
+          - Proper use of LLM APIs (Claude/OpenAI)?
+          - Well-crafted prompts for research, audit, strategy?
+          - Efficient token usage?
+          - Handles API errors gracefully?
+
+          5. OUTPUT QUALITY (0-10):
+          - Comprehensive brand book generated?
+          - Reports are well-structured and actionable?
+          - Both JSON and Markdown outputs work?
+          - Brand type adaptation is effective?
+
+          6. TOKEN EFFICIENCY (0-10):
+          - All files <500 lines?
+          - Minimal code duplication?
+          - Optimized for Claude's context window?
+
+          7. PRODUCTION READINESS (0-10):
+          - Type-check passes?
+          - Actually works for real brands (like Flyberry)?
+          - Cost-effective (~$0.60 per brand)?
+          - Time-efficient (2-3 hours per brand)?
+
+          8. BUSINESS VALUE (0-10):
+          - Replaces hours of manual brand strategy work?
+          - Output quality matches human strategist?
+          - Actionable recommendations?
+          - Worth the cost ($0.60 vs hiring strategist)?
+
+          Return a JSON object with:
+          {
+            "overall_score": <average of all scores>,
+            "scores": {
+              "correctness": <0-10>,
+              "code_quality": <0-10>,
+              "architecture": <0-10>,
+              "llm_integration": <0-10>,
+              "output_quality": <0-10>,
+              "token_efficiency": <0-10>,
+              "production_readiness": <0-10>,
+              "business_value": <0-10>
+            },
+            "passes": <true if overall_score >= 7>,
+            "critical_issues": [<list of blocking issues>],
+            "strengths": [<list of what works well>],
+            "recommendations": [<list of improvements>]
+          }
+
+defaultTest:
+  options:
+    threshold: 0.7

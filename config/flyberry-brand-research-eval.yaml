@@ -1,0 +1,103 @@
+description: "Flyberry Brand Research - Project Management & Research Database Quality Evaluation"
+
+prompts:
+  - |
+    Build a brand research automation system with project tracking and research database management.
+
+    Requirements:
+    - Project Tracker: Manage 64 deliverables across 5 phases with status tracking
+    - Research Database: Store and index research findings with search capabilities
+    - AI Research: Automate research using Claude AI
+    - Dashboards: Generate markdown reports and project dashboards
+    - Integration: All three modules work together seamlessly
+
+    The solution should follow these standards:
+    - ES modules (import/export)
+    - Files <500 lines
+    - Functions <100 lines
+    - Comprehensive error handling with context
+    - Clear separation of concerns
+
+providers:
+  - anthropic:messages:claude-sonnet-4-20250514
+    config:
+      temperature: 0.3
+      max_tokens: 4000
+
+tests:
+  - description: "Evaluate flyberry-brand-research codebase quality"
+    assert:
+      - type: llm-rubric
+        value: |
+          Evaluate the flyberry-brand-research project on a scale of 0-10 for each criterion:
+
+          1. CORRECTNESS (0-10):
+          - Does project tracker accurately track 64 deliverables?
+          - Does research database store and search findings correctly?
+          - Do the three modules integrate properly?
+          - Do dashboards generate accurate reports?
+
+          2. CODE QUALITY (0-10):
+          - Files under 500 lines? (research-database.js is 547 lines - violation!)
+          - Functions under 100 lines?
+          - Clean ES module usage (import/export)?
+          - Consistent naming conventions?
+          - Minimal code duplication?
+
+          3. ARCHITECTURE (0-10):
+          - Clear separation: tracker, database, research modules?
+          - Data flows logically between modules?
+          - Easy to extend (add new deliverables, research topics)?
+          - Config properly externalized (scope.js)?
+
+          4. ERROR HANDLING (0-10):
+          - Comprehensive error handling?
+          - Error messages include context (what, why, how to fix)?
+          - Graceful degradation when modules fail?
+          - User-friendly error output?
+
+          5. DATA MANAGEMENT (0-10):
+          - JSON data structures are well-designed?
+          - Data persistence works reliably?
+          - Search functionality is effective?
+          - Export capabilities are useful?
+
+          6. TOKEN EFFICIENCY (0-10):
+          - Files <500 lines? (research-database.js FAILS at 547 lines)
+          - Code is concise and efficient?
+          - Optimized for Claude's context window?
+
+          7. PRODUCTION READINESS (0-10):
+          - Actually works for Flyberry's ₹50 Cr project?
+          - Handles all 64 deliverables correctly?
+          - Commands work as documented?
+          - Setup instructions are clear?
+
+          8. TESTING & DOCUMENTATION (0-10):
+          - Test coverage (currently 0% - major issue)?
+          - Documentation is complete and accurate?
+          - TROUBLESHOOTING.md exists?
+          - Known issues are documented?
+
+          Return a JSON object with:
+          {
+            "overall_score": <average of all scores>,
+            "scores": {
+              "correctness": <0-10>,
+              "code_quality": <0-10>,
+              "architecture": <0-10>,
+              "error_handling": <0-10>,
+              "data_management": <0-10>,
+              "token_efficiency": <0-10>,
+              "production_readiness": <0-10>,
+              "testing_and_documentation": <0-10>
+            },
+            "passes": <true if overall_score >= 7>,
+            "critical_issues": [<list of blocking issues, including: research-database.js over 500 lines, no tests, web search placeholder>],
+            "strengths": [<list of what works well>],
+            "recommendations": [<list of improvements, prioritize: add tests, split research-database.js, implement real web search>]
+          }
+
+defaultTest:
+  options:
+    threshold: 0.7

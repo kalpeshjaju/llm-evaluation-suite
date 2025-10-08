@@ -1,0 +1,106 @@
+description: "Bank of Agents - API Usage Analysis Quality Evaluation"
+
+prompts:
+  - |
+    Analyze a project directory to identify Claude/Anthropic API usage and calculate cost savings opportunities by migrating interactive work to Claude Code.
+
+    Requirements:
+    - Scan TypeScript/JavaScript files for API calls
+    - Detect patterns: client.messages.create(), anthropic.messages.create()
+    - Classify usage: interactive vs automation vs batch
+    - Estimate token usage and monthly costs
+    - Recommend migration strategy (what to move to Claude Code, what to keep on API)
+    - Generate markdown report with cost analysis and action items
+
+    The solution should be production-ready, type-safe, well-tested, and follow these standards:
+    - TypeScript strict mode
+    - Files <500 lines
+    - Functions <100 lines
+    - Comprehensive error handling with context
+    - 80%+ test coverage
+
+providers:
+  - anthropic:messages:claude-sonnet-4-20250514
+    config:
+      temperature: 0.3
+      max_tokens: 4000
+
+tests:
+  - description: "Evaluate bank-of-agents codebase quality"
+    assert:
+      - type: llm-rubric
+        value: |
+          Evaluate the bank-of-agents project on a scale of 0-10 for each criterion:
+
+          1. CORRECTNESS (0-10):
+          - Does it correctly detect API calls in TypeScript/JavaScript files?
+          - Does the classification logic (interactive/automation/batch) make sense?
+          - Are token estimates and cost calculations accurate?
+          - Does it generate useful, actionable reports?
+
+          2. CODE QUALITY (0-10):
+          - Files under 500 lines? (Target: <300, Max: 500)
+          - Functions under 100 lines?
+          - Proper TypeScript usage (strict mode, no 'any' types)?
+          - Clean, maintainable code structure?
+          - Follows ES modules (import/export)?
+
+          3. ARCHITECTURE (0-10):
+          - Modular design with clear separation of concerns?
+          - Analyzer, Reporter, and Types properly separated?
+          - Easy to extend (e.g., add new API patterns)?
+          - Efficient file scanning (handles large projects)?
+
+          4. ERROR HANDLING (0-10):
+          - Comprehensive try/catch blocks?
+          - Error messages include context (what, why, how to fix)?
+          - Graceful degradation (handles missing files, permissions, etc.)?
+          - User-friendly error output?
+
+          5. TESTING (0-10):
+          - Test coverage >80%?
+          - Tests for analyzer, reporter, and main flow?
+          - Edge cases covered (no files found, invalid paths, etc.)?
+          - Tests actually pass?
+
+          6. TOKEN EFFICIENCY (0-10):
+          - All files <500 lines?
+          - Minimal code duplication?
+          - Efficient algorithms (not reading files multiple times)?
+          - Optimized for Claude's context window?
+
+          7. PRODUCTION READINESS (0-10):
+          - Type-check passes?
+          - Linting passes?
+          - All tests pass?
+          - Works for real-world projects?
+          - Documentation complete and accurate?
+
+          8. BUSINESS VALUE (0-10):
+          - Actually helps identify cost savings?
+          - Reports are clear and actionable?
+          - Recommendations are practical?
+          - Easy for non-technical users to understand output?
+
+          Return a JSON object with:
+          {
+            "overall_score": <average of all scores>,
+            "scores": {
+              "correctness": <0-10>,
+              "code_quality": <0-10>,
+              "architecture": <0-10>,
+              "error_handling": <0-10>,
+              "testing": <0-10>,
+              "token_efficiency": <0-10>,
+              "production_readiness": <0-10>,
+              "business_value": <0-10>
+            },
+            "passes": <true if overall_score >= 7>,
+            "critical_issues": [<list of blocking issues>],
+            "strengths": [<list of what works well>],
+            "recommendations": [<list of improvements>]
+          }
+
+defaultTest:
+  options:
+    threshold: 0.7  # 7/10 minimum score to pass

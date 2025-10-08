@@ -10,6 +10,10 @@ test-results.json
 *.log
 .promptfoo/
 
+# Build
+dist/
+build/
+
 # OS files
 .DS_Store
 Thumbs.db

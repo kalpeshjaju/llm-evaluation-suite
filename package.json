@@ -16,7 +16,10 @@
     "install-hooks": "bash scripts/install-hooks.sh",
     "check-results": "node scripts/check-results.js",
     "enforce-quality": "node scripts/enforce-quality.js",
-    "estimate-cost": "node scripts/estimate-cost.js"
+    "estimate-cost": "node scripts/estimate-cost.js",
+    "type-check": "echo 'JavaScript project - no type checking'",
+    "lint": "echo 'Linting not yet configured - see CLAUDE.md'",
+    "test": "npm run test:example"
   },
   "keywords": ["llm", "evaluation", "testing", "promptfoo", "claude"],
   "author": "Kalpesh",

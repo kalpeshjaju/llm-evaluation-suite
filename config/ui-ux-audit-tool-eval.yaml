@@ -1,0 +1,115 @@
+description: "UI/UX Audit Tool - Automated Website Quality Analysis Evaluation"
+
+prompts:
+  - |
+    Build an AI-powered UI/UX audit tool that analyzes websites for quality, accessibility, and performance.
+
+    Requirements:
+    - Browser automation: Puppeteer + Chrome DevTools
+    - Analysis: 257 tests across 6 categories (Visual Hierarchy, Accessibility, Performance, Content, Responsive, Interaction)
+    - AI Integration: Claude Sonnet 4.5 for vision analysis
+    - Performance: Lighthouse integration for metrics
+    - Reports: 7 specialized report types (Master, Designer, Developer, Copywriter, Brand Strategist, CRO, Heuristic)
+    - Multi-page: Support for Shopify and batch analysis
+
+    The solution should follow these standards:
+    - TypeScript strict mode
+    - Files <500 lines (many files violate this - major issue)
+    - Functions <100 lines
+    - Comprehensive error handling
+    - 80%+ test coverage
+
+providers:
+  - anthropic:messages:claude-sonnet-4-20250514
+    config:
+      temperature: 0.3
+      max_tokens: 4000
+
+tests:
+  - description: "Evaluate ui-ux-audit-tool codebase quality"
+    assert:
+      - type: llm-rubric
+        value: |
+          Evaluate the ui-ux-audit-tool project on a scale of 0-10 for each criterion:
+
+          1. CORRECTNESS (0-10):
+          - Does it successfully audit websites across 257 tests?
+          - Does Lighthouse integration work properly?
+          - Do all 7 report types generate correctly?
+          - Does AI vision analysis provide useful insights?
+          - Does accessibility testing work (axe-core)?
+
+          2. CODE QUALITY (0-10):
+          - Files under 500 lines? (9 files violate this - MAJOR ISSUE)
+            - qa-agent.ts: 1079 lines (worst offender)
+            - shopify-reporter.ts: 893 lines
+            - html-reporter.ts: 651 lines
+            - And 6 more over limit
+          - Functions under 100 lines?
+          - Proper TypeScript usage (strict mode)?
+          - Consistent naming (camelCase vs snake_case issues)?
+          - Avoids wildcard imports?
+
+          3. ARCHITECTURE (0-10):
+          - Modular design with clear separation?
+          - 6 analysis agents properly structured?
+          - Orchestrator cleanly coordinates workflow?
+          - V3 architecture is an improvement over V1/V2?
+          - Easy to extend (add new tests, report types)?
+
+          4. INTEGRATION QUALITY (0-10):
+          - Puppeteer integration works smoothly?
+          - Lighthouse metrics are accurate?
+          - Chrome DevTools MCP integration is solid?
+          - Claude AI vision analysis is effective?
+          - ChromaDB optional integration works?
+
+          5. TOKEN EFFICIENCY (0-10):
+          - Files <500 lines? (Score: 20/100 per QA report - CRITICAL)
+          - Minimal code duplication?
+          - Optimized for Claude's context window?
+          - Large files split during edits?
+
+          6. TESTING (0-10):
+          - Test coverage adequate?
+          - 253 tests, 210 passing (83% pass rate - 43 failing)
+          - Unit tests for agents?
+          - Integration tests for full workflow?
+          - Self-QA agent provides useful quality checks?
+
+          7. PRODUCTION READINESS (0-10):
+          - Type-check passes?
+          - Actually works for real websites?
+          - Performance is acceptable (2-5 min per audit)?
+          - Error handling is comprehensive?
+          - Documentation is complete?
+
+          8. BUSINESS VALUE (0-10):
+          - Replaces manual UI/UX audits effectively?
+          - 7 specialized reports are useful for different audiences?
+          - Output quality matches human expert?
+          - Cost-effective for clients?
+          - Time-efficient vs manual audits?
+
+          Return a JSON object with:
+          {
+            "overall_score": <average of all scores>,
+            "scores": {
+              "correctness": <0-10>,
+              "code_quality": <0-10>,
+              "architecture": <0-10>,
+              "integration_quality": <0-10>,
+              "token_efficiency": <0-10>,
+              "testing": <0-10>,
+              "production_readiness": <0-10>,
+              "business_value": <0-10>
+            },
+            "passes": <true if overall_score >= 7>,
+            "critical_issues": [<list blocking issues, including: 9 files >500 lines (especially qa-agent.ts at 1079 lines), 43 failing tests, token efficiency score 20/100>],
+            "strengths": [<list of what works well>],
+            "recommendations": [<list of improvements, prioritize: split large files, fix failing tests, improve token efficiency>]
+          }
+
+defaultTest:
+  options:
+    threshold: 0.7
