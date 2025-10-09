@@ -20,7 +20,7 @@ prompts:
     - 80%+ test coverage
 
 providers:
-  - anthropic:messages:claude-sonnet-4-20250514
+  - id: anthropic:messages:claude-sonnet-4-20250514
     config:
       temperature: 0.3
       max_tokens: 4000
