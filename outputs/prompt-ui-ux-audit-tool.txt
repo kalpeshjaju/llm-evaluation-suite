@@ -1,0 +1,130 @@
+# Evaluate Project: ui-ux-audit-tool
+
+Please evaluate this project's code quality on a scale of 0-10 for each criterion.
+
+## Project Overview
+
+**Name**: ui-ux-audit-tool
+**Description**: AI-powered autonomous agent for comprehensive UI/UX analysis
+**Total Files**: 10
+**Files Over 500 Lines**: 0 ✅
+
+
+
+### File Sizes:
+- dist/test-execution/heuristic-handlers.d.ts: 21 lines ✅
+- dist/test-execution/test-loader.d.ts: 69 lines ✅
+- dist/test-execution/parallel-coordinator.js: 226 lines ✅
+- dist/test-execution/test-loader.js: 124 lines ✅
+- dist/test-execution/parallel-coordinator.d.ts: 52 lines ✅
+- dist/test-execution/detection-handlers.d.ts: 17 lines ✅
+- dist/test-execution/heuristic-handlers/shared-utils.js: 78 lines ✅
+- dist/test-execution/heuristic-handlers/interaction-test-handler.d.ts: 14 lines ✅
+- dist/test-execution/heuristic-handlers/css-layout-handler.d.ts: 17 lines ✅
+- dist/test-execution/heuristic-handlers/css-spacing-handler.d.ts: 14 lines ✅
+
+## Key Requirements (from CLAUDE.md)
+
+```
+# UI/UX Audit Tool - Project Guide
+
+> AI-powered UI/UX analysis tool with Chrome DevTools, Lighthouse, and Claude AI
+
+---
+
+**🚨 CRITICAL - READ FIRST:**
+1. [`~/.claude/MASTER_RULES.md`](/Users/kalpeshjaju/.claude/MASTER_RULES.md) - **ABSOLUTE RULES** (must follow)
+2. [`~/.claude/CLAUDE.md`](/Users/kalpeshjaju/.claude/CLAUDE.md) - Global coding standards
+3. This file - Project-specific instructions
+
+**If any conflict, MASTER_RULES.md wins.**
+
+---
+
+## Quick Start Commands
+
+```bash
+# Development
+npm run dev                        # Run CLI in dev mode
+npm run dev:legacy                 # Run legacy V1/V2 version
+npm run build                      # Build TypeScript to dist/
+
+# Testing a Website (Most Common)
+npm run dev -- audit <url>                           # Interactive: choose report types
+npm run dev -- audit <url> --with-ai                 # AI-enhanced audit
+npm run dev -- audit <url> --reports designer        # Specific report type
+npm run dev -- audit <url> --all-reports        ...
+```
+
+## Dependencies
+
+24 production dependencies:
+- @anthropic-ai/sdk
+- @axe-core/puppeteer
+- @modelcontextprotocol/sdk
+- @types/cheerio
+- axe-core
+- cheerio
+- chromadb
+- chrome-launcher
+- commander
+- compromise
+
+## Evaluation Criteria
+
+Please score each criterion from 0-10 and provide reasoning:
+
+### 1. TOKEN EFFICIENCY (0-10)
+- Are all files <500 lines? (Target: <300, Max: 500)
+- Are functions <100 lines?
+- Is code concise without duplication?
+- Is it optimized for Claude's context window?
+
+### 2. CODE QUALITY (0-10)
+- TypeScript with strict mode? (or plain JavaScript?)
+- Proper imports (no wildcards)?
+- Error handling with context?
+- Clean, maintainable code?
+- Consistent naming conventions?
+
+### 3. ARCHITECTURE (0-10)
+- Modular design with separation of concerns?
+- Easy to extend and maintain?
+- Clear data flow?
+- Well-organized directory structure?
+
+### 4. PRODUCTION READINESS (0-10)
+- Tests exist and pass?
+- Documentation complete?
+- Error handling comprehensive?
+- Works for real-world use cases?
+
+### 5. BUSINESS VALUE (0-10)
+- Solves a real problem?
+- Cost-effective?
+- Time-efficient?
+- Valuable to users?
+
+## Output Format
+
+Please provide:
+
+```json
+{
+  "overall_score": <average of all scores 0-10>,
+  "scores": {
+    "token_efficiency": <0-10>,
+    "code_quality": <0-10>,
+    "architecture": <0-10>,
+    "production_readiness": <0-10>,
+    "business_value": <0-10>
+  },
+  "passes": <true if overall_score >= 7>,
+  "critical_issues": ["list of blocking issues"],
+  "strengths": ["list of what works well"],
+  "recommendations": ["list of top 5 improvements"],
+  "cost_estimate": "<estimated monthly Claude API cost>"
+}
+```
+
+And a brief summary explaining the scores.
