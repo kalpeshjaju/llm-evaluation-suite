@@ -4,13 +4,26 @@
 
 This toolkit helps you automatically evaluate LLM-generated code for quality, correctness, security, and adherence to your coding standards.
 
+## 🆓 Two Modes Available
+
+**[📖 See EVALUATION_GUIDE.md for detailed comparison](./EVALUATION_GUIDE.md)**
+
+1. **Claude Code Mode** (FREE) - Use Claude Pro subscription, no API costs
+2. **API Mode** ($0.003/eval) - Fully automated, CI/CD ready
+
+Quick commands:
+```bash
+npm run eval:prompt <project-name>  # Generate FREE evaluation prompt
+npm run eval:all                    # Automated API evaluation (costs money)
+```
+
 ## 🎯 What This Does
 
 - **Automates LLM evaluation**: No manual code review needed
 - **Uses Claude as a judge**: Leverages LLM to evaluate LLM output
 - **Tracks quality metrics**: Correctness, completeness, security, token efficiency
 - **Catches regressions**: Ensure consistent quality over time
-- **Cost-effective**: ~$0.003 per evaluation
+- **Cost-effective**: FREE with Claude Code, or ~$0.003 per evaluation via API
 
 ## 📦 What's Included
 
