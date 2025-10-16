@@ -21,9 +21,18 @@
     "eval:prompt": "node scripts/generate-claude-code-prompt.js",
     "type-check": "echo 'JavaScript project - no type checking'",
     "lint": "echo 'Linting not yet configured - see CLAUDE.md'",
-    "test": "npm run test:example"
+    "test": "npm run test:example",
+    "detect-deep-review": "tsx scripts/orchestrator/deep-review-detector.ts",
+    "review:deep": "tsx scripts/local/deep-review.ts",
+    "review:deep:help": "tsx scripts/local/deep-review.ts --help"
   },
-  "keywords": ["llm", "evaluation", "testing", "promptfoo", "claude"],
+  "keywords": [
+    "llm",
+    "evaluation",
+    "testing",
+    "promptfoo",
+    "claude"
+  ],
   "author": "Kalpesh",
   "license": "ISC",
   "dependencies": {
