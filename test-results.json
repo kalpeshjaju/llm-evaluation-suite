@@ -1,38 +1,38 @@
 {
-  "evalId": "eval-hAs-2025-10-16T13:59:22",
+  "evalId": "eval-6bx-2025-10-17T08:23:25",
   "results": {
     "version": 3,
-    "timestamp": "2025-10-16T13:59:22.575Z",
+    "timestamp": "2025-10-17T08:23:25.230Z",
     "prompts": [
       {
-        "raw": "Create a simple TypeScript function that adds two numbers",
-        "label": "Create a simple TypeScript function that adds two numbers",
-        "id": "a72379da6ad9cd55278b3244b335aa632ee6ab9d942849d4abc4742efa2e110f",
+        "raw": "Create a TypeScript function that validates email addresses.\nRequirements:\n- Must check for valid email format\n- Must handle edge cases (empty, null, malformed)\n- Must include error messages with context\n- Must be well-typed (no 'any')\n- Must include JSDoc comments\n",
+        "label": "Create a TypeScript function that validates email addresses.\nRequirements:\n- Must check for valid email format\n- Must handle edge cases (empty, null, malformed)\n- Must include error messages with context\n- Must be well-typed (no 'any')\n- Must include JSDoc comments\n",
+        "id": "2bc21ae4f715c667aa822814181dbb685d33c1dde23fa8d05c06bfb36c3d74ec",
         "provider": "anthropic:messages:claude-sonnet-4-20250514",
         "metrics": {
-          "score": 5.5,
+          "score": 17,
           "testPassCount": 1,
-          "testFailCount": 0,
+          "testFailCount": 2,
           "testErrorCount": 0,
-          "assertPassCount": 2,
-          "assertFailCount": 0,
-          "totalLatencyMs": 13,
+          "assertPassCount": 1,
+          "assertFailCount": 3,
+          "totalLatencyMs": 73301,
           "tokenUsage": {
-            "prompt": 0,
-            "completion": 0,
-            "cached": 351,
-            "total": 351,
-            "numRequests": 1,
+            "prompt": 210,
+            "completion": 6000,
+            "cached": 0,
+            "total": 6210,
+            "numRequests": 3,
             "completionDetails": {
               "reasoning": 0,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             },
             "assertions": {
-              "total": 682,
-              "prompt": 0,
-              "completion": 0,
-              "cached": 682,
+              "total": 7239,
+              "prompt": 6810,
+              "completion": 429,
+              "cached": 0,
               "numRequests": 0,
               "completionDetails": {
                 "reasoning": 0,
@@ -43,45 +43,50 @@
           },
           "namedScores": {},
           "namedScoresCount": {},
-          "cost": 0.0050609999999999995
+          "cost": 0.09063
         }
       }
     ],
     "results": [
       {
-        "cost": 0.0050609999999999995,
+        "cost": 0.03021,
+        "error": "The code demonstrates strong email validation with proper TypeScript interfaces, comprehensive edge case handling (null, undefined, empty, type checking), and very detailed contextual error messages. However, it fails the token efficiency requirement significantly - the code is approximately 180+ lines, nearly double the 100-line limit. While the code quality is excellent in terms of validation logic, error handling, and TypeScript typing (no 'any' types used), the excessive length prevents it from meeting the specified requirements.",
         "gradingResult": {
-          "pass": true,
-          "score": 5.5,
-          "reason": "All assertions passed",
+          "pass": false,
+          "score": 3,
+          "reason": "The code demonstrates strong email validation with proper TypeScript interfaces, comprehensive edge case handling (null, undefined, empty, type checking), and very detailed contextual error messages. However, it fails the token efficiency requirement significantly - the code is approximately 180+ lines, nearly double the 100-line limit. While the code quality is excellent in terms of validation logic, error handling, and TypeScript typing (no 'any' types used), the excessive length prevents it from meeting the specified requirements.",
           "namedScores": {},
           "tokensUsed": {
-            "total": 682,
-            "prompt": 0,
-            "completion": 0,
-            "cached": 682,
+            "total": 2409,
+            "prompt": 2288,
+            "completion": 121,
+            "cached": 0,
             "numRequests": 0
           },
           "componentResults": [
             {
-              "pass": true,
-              "score": 1,
-              "reason": "Generated valid function code"
+              "pass": false,
+              "score": 0,
+              "reason": "Custom function threw error: Identifier 'output' has already been declared\nStack Trace: SyntaxError: Identifier 'output' has already been declared\n    at new Function (<anonymous>)\n    at handleJavascript (/Users/kalpeshjaju/Development/llm-evaluation-suite/node_modules/promptfoo/dist/src/assertions/javascript.js:49:36)\n    at runAssertion (/Users/kalpeshjaju/Development/llm-evaluation-suite/node_modules/promptfoo/dist/src/assertions/index.js:330:30)\n    at /Users/kalpeshjaju/Development/llm-evaluation-suite/node_modules/promptfoo/dist/src/assertions/index.js:377:30\n    at /Users/kalpeshjaju/Development/llm-evaluation-suite/node_modules/promptfoo/node_modules/async/dist/async.js:151:38\n    at replenish (/Users/kalpeshjaju/Development/llm-evaluation-suite/node_modules/promptfoo/node_modules/async/dist/async.js:447:21)\n    at /Users/kalpeshjaju/Development/llm-evaluation-suite/node_modules/promptfoo/node_modules/async/dist/async.js:452:13\n    at Object.eachOfLimit (/Users/kalpeshjaju/Development/llm-evaluation-suite/node_modules/promptfoo/node_modules/async/dist/async.js:478:36)\n    at /Users/kalpeshjaju/Development/llm-evaluation-suite/node_modules/promptfoo/node_modules/async/dist/async.js:220:25\n    at new Promise (<anonymous>)\nconst output = context.vars.output || output;\n\n// Basic syntax checks\nconst hasFunction = /function|const.*=.*\\(/i.test(output);\nconst hasValidation = /email|@/i.test(output);\n\nreturn {\n  pass: hasFunction && hasValidation,\n  score: hasFunction && hasValidation ? 1 : 0,\n  reason: hasFunction && hasValidation\n    ? \"Contains function and email validation logic\"\n    : \"Missing function or validation logic\"\n};",
+              "assertion": {
+                "type": "javascript",
+                "value": "const output = context.vars.output || output;\n\n// Basic syntax checks\nconst hasFunction = /function|const.*=.*\\(/i.test(output);\nconst hasValidation = /email|@/i.test(output);\n\nreturn {\n  pass: hasFunction && hasValidation,\n  score: hasFunction && hasValidation ? 1 : 0,\n  reason: hasFunction && hasValidation\n    ? \"Contains function and email validation logic\"\n    : \"Missing function or validation logic\"\n};\n"
+              }
             },
             {
               "assertion": {
                 "type": "llm-rubric",
-                "value": "Does this code:\n1. Contain a function that adds two numbers?\n2. Look syntactically correct?\n3. Follow basic TypeScript conventions?\n\nScore 0-10. Pass if >= 7.\n",
+                "value": "Evaluate this code on:\n1. Does it validate email format correctly?\n2. Does it handle edge cases (null, empty, malformed)?\n3. Are error messages contextual and helpful?\n4. Is TypeScript typing strict (no 'any')?\n5. Is it token-efficient (<100 lines)?\n\nScore out of 10. Passing score: 7+\n",
                 "provider": "anthropic:messages:claude-sonnet-4-20250514"
               },
-              "pass": true,
-              "score": 10,
-              "reason": "The output contains multiple well-formed TypeScript functions that add two numbers (regular function declaration and arrow function variants). The syntax is correct with proper TypeScript type annotations for parameters (a: number, b: number) and return types (: number). It follows TypeScript conventions including type annotations, proper variable declarations with const, and includes error handling. The code demonstrates good practices and would compile without syntax errors.",
+              "pass": false,
+              "score": 6,
+              "reason": "The code demonstrates strong email validation with proper TypeScript interfaces, comprehensive edge case handling (null, undefined, empty, type checking), and very detailed contextual error messages. However, it fails the token efficiency requirement significantly - the code is approximately 180+ lines, nearly double the 100-line limit. While the code quality is excellent in terms of validation logic, error handling, and TypeScript typing (no 'any' types used), the excessive length prevents it from meeting the specified requirements.",
               "tokensUsed": {
-                "total": 682,
-                "prompt": 0,
-                "completion": 0,
-                "cached": 682,
+                "total": 2409,
+                "prompt": 2288,
+                "completion": 121,
+                "cached": 0,
                 "numRequests": 0,
                 "completionDetails": {
                   "reasoning": 0,
@@ -92,75 +97,269 @@
             }
           ]
         },
-        "id": "09113167-fdca-4797-a888-48e4b2837ea0",
-        "latencyMs": 13,
+        "id": "aaf0a016-02b0-47e1-9054-1af41e75440d",
+        "latencyMs": 23657,
         "namedScores": {},
         "prompt": {
-          "raw": "Create a simple TypeScript function that adds two numbers",
-          "label": "Create a simple TypeScript function that adds two numbers"
+          "raw": "Create a TypeScript function that validates email addresses.\nRequirements:\n- Must check for valid email format\n- Must handle edge cases (empty, null, malformed)\n- Must include error messages with context\n- Must be well-typed (no 'any')\n- Must include JSDoc comments\n",
+          "label": "Create a TypeScript function that validates email addresses.\nRequirements:\n- Must check for valid email format\n- Must handle edge cases (empty, null, malformed)\n- Must include error messages with context\n- Must be well-typed (no 'any')\n- Must include JSDoc comments\n"
         },
-        "promptId": "a72379da6ad9cd55278b3244b335aa632ee6ab9d942849d4abc4742efa2e110f",
+        "promptId": "2bc21ae4f715c667aa822814181dbb685d33c1dde23fa8d05c06bfb36c3d74ec",
         "promptIdx": 0,
         "provider": {
           "id": "anthropic:messages:claude-sonnet-4-20250514",
           "label": ""
         },
         "response": {
-          "output": "Here's a simple TypeScript function that adds two numbers:\n\n```typescript\nfunction addNumbers(a: number, b: number): number {\n    return a + b;\n}\n\n// Example usage:\nconst result = addNumbers(5, 3);\nconsole.log(result); // Output: 8\n```\n\nYou can also write it as an arrow function:\n\n```typescript\nconst addNumbers = (a: number, b: number): number => {\n    return a + b;\n};\n\n// Or even more concise:\nconst addNumbers = (a: number, b: number): number => a + b;\n\n// Example usage:\nconst result = addNumbers(10, 7);\nconsole.log(result); // Output: 17\n```\n\n**Key TypeScript features demonstrated:**\n- **Type annotations**: `a: number, b: number` specifies that both parameters must be numbers\n- **Return type annotation**: `: number` specifies that the function returns a number\n- **Type safety**: TypeScript will give you an error if you try to pass non-number values\n\n**Example with error handling:**\n```typescript\nfunction addNumbers(a: number, b: number): number {\n    if (typeof a !== 'number' || typeof b !== 'number') {\n        throw new Error('Both arguments must be numbers');\n    }\n    return a + b;\n}\n```\n\nThe TypeScript compiler will catch type errors at compile time, making your code more robust!",
+          "output": "```typescript\n/**\n * Result type for email validation operations\n */\ninterface ValidationResult {\n  /** Whether the email is valid */\n  isValid: boolean;\n  /** Error message if validation fails, undefined if valid */\n  errorMessage?: string;\n  /** Additional context about the validation failure */\n  errorContext?: string;\n}\n\n/**\n * Configuration options for email validation\n */\ninterface EmailValidationOptions {\n  /** Maximum allowed length for the email address (default: 254) */\n  maxLength?: number;\n  /** Whether to allow international domain names (default: true) */\n  allowInternational?: boolean;\n  /** Whether to perform strict validation (default: false) */\n  strictMode?: boolean;\n}\n\n/**\n * Validates an email address according to RFC 5322 standards with additional checks\n * \n * @param email - The email address to validate\n * @param options - Optional configuration for validation behavior\n * @returns ValidationResult object containing validation status and error details\n * \n * @example\n * ```typescript\n * const result = validateEmail(\"user@example.com\");\n * if (result.isValid) {\n *   console.log(\"Email is valid!\");\n * } else {\n *   console.error(`Invalid email: ${result.errorMessage}`);\n * }\n * ```\n * \n * @example\n * ```typescript\n * // With options\n * const result = validateEmail(\"test@domain.co\", { \n *   maxLength: 50, \n *   strictMode: true \n * });\n * ```\n */\nfunction validateEmail(\n  email: string | null | undefined, \n  options: EmailValidationOptions = {}\n): ValidationResult {\n  const {\n    maxLength = 254,\n    allowInternational = true,\n    strictMode = false\n  } = options;\n\n  // Handle null, undefined, or empty cases\n  if (email === null) {\n    return {\n      isValid: false,\n      errorMessage: \"Email cannot be null\",\n      errorContext: \"Received null value instead of string\"\n    };\n  }\n\n  if (email === undefined) {\n    return {\n      isValid: false,\n      errorMessage: \"Email cannot be undefined\",\n      errorContext: \"Received undefined value instead of string\"\n    };\n  }\n\n  if (typeof email !== 'string') {\n    return {\n      isValid: false,\n      errorMessage: \"Email must be a string\",\n      errorContext: `Received ${typeof email} instead of string`\n    };\n  }\n\n  const trimmedEmail = email.trim();\n\n  if (trimmedEmail.length === 0) {\n    return {\n      isValid: false,\n      errorMessage: \"Email cannot be empty\",\n      errorContext: \"Email string is empty or contains only whitespace\"\n    };\n  }\n\n  // Check length constraints\n  if (trimmedEmail.length > maxLength) {\n    return {\n      isValid: false,\n      errorMessage: `Email exceeds maximum length of ${maxLength} characters`,\n      errorContext: `Email length: ${trimmedEmail.length} characters`\n    };\n  }\n\n  // Basic structure validation\n  const atSymbolCount = (trimmedEmail.match(/@/g) || []).length;\n  if (atSymbolCount !== 1) {\n    return {\n      isValid: false,\n      errorMessage: \"Email must contain exactly one @ symbol\",\n      errorContext: `Found ${atSymbolCount} @ symbols`\n    };\n  }\n\n  const [localPart, domainPart] = trimmedEmail.split('@');\n\n  // Validate local part (before @)\n  const localValidation = validateLocalPart(localPart, strictMode);\n  if (!localValidation.isValid) {\n    return localValidation;\n  }\n\n  // Validate domain part (after @)\n  const domainValidation = validateDomainPart(domainPart, allowInternational, strictMode);\n  if (!domainValidation.isValid) {\n    return domainValidation;\n  }\n\n  return { isValid: true };\n}\n\n/**\n * Validates the local part of an email address (part before @)\n * \n * @param localPart - The local part to validate\n * @param strictMode - Whether to apply strict validation rules\n * @returns ValidationResult for the local part\n */\nfunction validateLocalPart(localPart: string, strictMode: boolean): ValidationResult {\n  if (!localPart || localPart.length === 0) {\n    return {\n      isValid: false,\n      errorMessage: \"Local part (before @) cannot be empty\",\n      errorContext: \"The part before @ symbol is missing\"\n    };\n  }\n\n  if (localPart.length > 64) {\n    return {\n      isValid: false,\n      errorMessage: \"Local part exceeds maximum length of 64 characters\",\n      errorContext: `Local part length: ${localPart.length} characters`\n    };\n  }\n\n  // Check for invalid starting/ending characters\n  if (localPart.startsWith('.') || localPart.endsWith('.')) {\n    return {\n      isValid: false,\n      errorMessage: \"Local part cannot start or end with a period\",\n      errorContext: \"Periods at the beginning or end of local part are not allowed\"\n    };\n  }\n\n  // Check for consecutive periods\n  if (localPart.includes('..')) {\n    return {\n      isValid: false,\n      errorMessage: \"Local part cannot contain consecutive periods\",\n      errorContext: \"Found consecutive periods (..) in local part\"\n    };\n  }\n\n  // Strict mode validation for local part\n  if (strictMode) {\n    const strictLocalRegex = /^[a-zA-Z0-9._-]+$/;\n    if (!strictLocalRegex.test(localPart)) {\n      return {\n        isValid: false,\n        errorMessage: \"Local part contains invalid characters (strict mode)\",\n        errorContext: \"Only letters, numbers, periods, underscores, and hyphens allowed in strict mode\"\n      };\n    }\n  } else {\n    // More permissive regex for standard validation\n    const standardLocalRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+$/;\n    if (!standardLocalRegex.test(localPart)) {\n      return {\n        isValid: false,\n        errorMessage: \"Local part contains invalid characters\",\n        errorContext: \"Local part contains characters not allowed in email addresses\"\n      };\n    }\n  }\n\n  return { isValid: true };\n}\n\n/**\n * Validates the domain part of an email address (part after @)\n * \n * @param domainPart - The domain part to validate\n * @param allowInternational - Whether to allow international domain names\n * @param strictMode - Whether to apply strict validation rules\n * @returns ValidationResult for the domain part\n */\nfunction validateDomainPart(\n  domainPart: string, \n  allowInternational: boolean, \n  strictMode: boolean\n): ValidationResult {\n  if (!domainPart || domainPart.length === 0) {\n    return {\n      isValid: false,\n      errorMessage: \"Domain part (after @) cannot be empty\",\n      errorContext: \"The part after @ symbol is missing\"\n    };\n  }\n\n  if (domainPart.length > 253) {\n    return {\n      isValid: false,\n      errorMessage: \"Domain part exceeds maximum length of 253 characters\",\n      errorContext: `Domain part length: ${domainPart.length} characters`\n    };\n  }\n\n  // Check for invalid starting/ending characters\n  if (domainPart.startsWith('.') || domainPart.endsWith('.')) {\n    return {\n      isValid: false,\n      errorMessage: \"Domain cannot start or end with a period\",\n      errorContext: \"Periods at the beginning or end of domain are not allowed\"\n    };\n  }\n\n  if (domainPart.startsWith('-') || domainPart.endsWith('-')) {\n    return {\n      isValid: false,\n      errorMessage: \"Domain cannot start",
           "tokenUsage": {
-            "cached": 351,
-            "total": 351
+            "total": 2070,
+            "prompt": 70,
+            "completion": 2000
           },
-          "finishReason": "stop",
-          "cost": 0.0050609999999999995
+          "finishReason": "length",
+          "cost": 0.03021
         },
-        "score": 5.5,
-        "success": true,
+        "score": 3,
+        "success": false,
         "testCase": {
-          "description": "Basic code generation test",
+          "description": "Email validator implementation",
+          "vars": {
+            "task": "email validation function"
+          },
           "assert": [
             {
               "type": "javascript",
-              "value": "// Check if output contains function-like code\nconst hasFunction = /function|const.*=|=>/.test(output);\nconst hasReturn = /return/.test(output);\n\nreturn {\n  pass: hasFunction,\n  score: hasFunction ? 1 : 0,\n  reason: hasFunction ? \"Generated valid function code\" : \"No function found\"\n};\n"
+              "value": "const output = context.vars.output || output;\n\n// Basic syntax checks\nconst hasFunction = /function|const.*=.*\\(/i.test(output);\nconst hasValidation = /email|@/i.test(output);\n\nreturn {\n  pass: hasFunction && hasValidation,\n  score: hasFunction && hasValidation ? 1 : 0,\n  reason: hasFunction && hasValidation\n    ? \"Contains function and email validation logic\"\n    : \"Missing function or validation logic\"\n};\n"
             },
             {
               "type": "llm-rubric",
-              "value": "Does this code:\n1. Contain a function that adds two numbers?\n2. Look syntactically correct?\n3. Follow basic TypeScript conventions?\n\nScore 0-10. Pass if >= 7.\n",
+              "value": "Evaluate this code on:\n1. Does it validate email format correctly?\n2. Does it handle edge cases (null, empty, malformed)?\n3. Are error messages contextual and helpful?\n4. Is TypeScript typing strict (no 'any')?\n5. Is it token-efficient (<100 lines)?\n\nScore out of 10. Passing score: 7+\n",
               "provider": "anthropic:messages:claude-sonnet-4-20250514"
             }
           ],
-          "vars": {},
-          "options": {},
+          "options": {
+            "provider": {
+              "temperature": 0.3
+            }
+          },
           "metadata": {}
         },
         "testIdx": 0,
-        "vars": {},
+        "vars": {
+          "task": "email validation function"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 1
+      },
+      {
+        "cost": 0.03021,
+        "gradingResult": {
+          "pass": true,
+          "score": 10,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 2411,
+            "prompt": 2253,
+            "completion": 158,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "assertion": {
+                "type": "llm-rubric",
+                "value": "Does the code include:\n1. Proper error handling for invalid inputs\n2. Contextual error messages (not just \"invalid\")\n3. Input validation before processing\n\nScore out of 10. Passing score: 7+\n",
+                "provider": "anthropic:messages:claude-sonnet-4-20250514"
+              },
+              "pass": true,
+              "score": 10,
+              "reason": "The code demonstrates excellent error handling practices: 1) Proper error handling for invalid inputs - handles null, undefined, wrong type, empty strings, length constraints, and various format violations; 2) Contextual error messages - provides specific, detailed error messages with context explaining what went wrong (e.g., 'Email length (X) exceeds maximum allowed length (Y)', 'Found X @ symbols, expected exactly 1'); 3) Input validation before processing - validates input type, null/undefined checks, trimming, and comprehensive validation of both local and domain parts. The code goes above and beyond with structured error responses including error messages and additional context.",
+              "tokensUsed": {
+                "total": 2411,
+                "prompt": 2253,
+                "completion": 158,
+                "cached": 0,
+                "numRequests": 0,
+                "completionDetails": {
+                  "reasoning": 0,
+                  "acceptedPrediction": 0,
+                  "rejectedPrediction": 0
+                }
+              }
+            }
+          ]
+        },
+        "id": "8e474190-5f4c-4596-b168-3db90ab7bb7a",
+        "latencyMs": 23746,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Create a TypeScript function that validates email addresses.\nRequirements:\n- Must check for valid email format\n- Must handle edge cases (empty, null, malformed)\n- Must include error messages with context\n- Must be well-typed (no 'any')\n- Must include JSDoc comments\n",
+          "label": "Create a TypeScript function that validates email addresses.\nRequirements:\n- Must check for valid email format\n- Must handle edge cases (empty, null, malformed)\n- Must include error messages with context\n- Must be well-typed (no 'any')\n- Must include JSDoc comments\n"
+        },
+        "promptId": "2bc21ae4f715c667aa822814181dbb685d33c1dde23fa8d05c06bfb36c3d74ec",
+        "promptIdx": 0,
+        "provider": {
+          "id": "anthropic:messages:claude-sonnet-4-20250514",
+          "label": ""
+        },
+        "response": {
+          "output": "```typescript\n/**\n * Result type for email validation operations\n */\ninterface EmailValidationResult {\n  /** Whether the email is valid */\n  isValid: boolean;\n  /** Error message if validation fails, undefined if valid */\n  error?: string;\n  /** Additional context about the validation failure */\n  context?: string;\n}\n\n/**\n * Configuration options for email validation\n */\ninterface EmailValidationOptions {\n  /** Maximum allowed length for the email address (default: 254) */\n  maxLength?: number;\n  /** Whether to allow international domain names (default: true) */\n  allowInternational?: boolean;\n  /** Whether to perform strict validation (default: false) */\n  strictMode?: boolean;\n}\n\n/**\n * Validates an email address according to RFC 5322 standards with additional checks\n * \n * @param email - The email address to validate\n * @param options - Optional configuration for validation behavior\n * @returns EmailValidationResult object containing validation status and error details\n * \n * @example\n * ```typescript\n * const result = validateEmail(\"user@example.com\");\n * if (result.isValid) {\n *   console.log(\"Email is valid!\");\n * } else {\n *   console.error(`Invalid email: ${result.error}`);\n * }\n * ```\n * \n * @example\n * ```typescript\n * // With options\n * const result = validateEmail(\"test@domain.co\", { \n *   maxLength: 50, \n *   strictMode: true \n * });\n * ```\n */\nfunction validateEmail(\n  email: string | null | undefined, \n  options: EmailValidationOptions = {}\n): EmailValidationResult {\n  const {\n    maxLength = 254,\n    allowInternational = true,\n    strictMode = false\n  } = options;\n\n  // Handle null, undefined, or empty cases\n  if (email === null) {\n    return {\n      isValid: false,\n      error: \"Email cannot be null\",\n      context: \"Received null value instead of string\"\n    };\n  }\n\n  if (email === undefined) {\n    return {\n      isValid: false,\n      error: \"Email cannot be undefined\",\n      context: \"Received undefined value instead of string\"\n    };\n  }\n\n  if (typeof email !== 'string') {\n    return {\n      isValid: false,\n      error: \"Email must be a string\",\n      context: `Received ${typeof email} instead of string`\n    };\n  }\n\n  const trimmedEmail = email.trim();\n\n  if (trimmedEmail === '') {\n    return {\n      isValid: false,\n      error: \"Email cannot be empty\",\n      context: \"Email address is required but was empty or whitespace only\"\n    };\n  }\n\n  // Check length constraints\n  if (trimmedEmail.length > maxLength) {\n    return {\n      isValid: false,\n      error: \"Email address is too long\",\n      context: `Email length (${trimmedEmail.length}) exceeds maximum allowed length (${maxLength})`\n    };\n  }\n\n  // Basic structure validation\n  const atSymbolCount = (trimmedEmail.match(/@/g) || []).length;\n  if (atSymbolCount !== 1) {\n    return {\n      isValid: false,\n      error: \"Email must contain exactly one @ symbol\",\n      context: `Found ${atSymbolCount} @ symbols, expected exactly 1`\n    };\n  }\n\n  const [localPart, domainPart] = trimmedEmail.split('@');\n\n  // Validate local part (before @)\n  const localValidation = validateLocalPart(localPart, strictMode);\n  if (!localValidation.isValid) {\n    return localValidation;\n  }\n\n  // Validate domain part (after @)\n  const domainValidation = validateDomainPart(domainPart, allowInternational, strictMode);\n  if (!domainValidation.isValid) {\n    return domainValidation;\n  }\n\n  return { isValid: true };\n}\n\n/**\n * Validates the local part of an email address (the part before @)\n * \n * @param localPart - The local part to validate\n * @param strictMode - Whether to apply strict validation rules\n * @returns EmailValidationResult for the local part\n */\nfunction validateLocalPart(localPart: string, strictMode: boolean): EmailValidationResult {\n  if (!localPart || localPart.length === 0) {\n    return {\n      isValid: false,\n      error: \"Local part cannot be empty\",\n      context: \"The part before @ symbol is missing\"\n    };\n  }\n\n  if (localPart.length > 64) {\n    return {\n      isValid: false,\n      error: \"Local part is too long\",\n      context: `Local part length (${localPart.length}) exceeds maximum of 64 characters`\n    };\n  }\n\n  // Check for consecutive dots\n  if (localPart.includes('..')) {\n    return {\n      isValid: false,\n      error: \"Local part cannot contain consecutive dots\",\n      context: \"Found '..' in local part which is not allowed\"\n    };\n  }\n\n  // Check for dots at start or end\n  if (localPart.startsWith('.') || localPart.endsWith('.')) {\n    return {\n      isValid: false,\n      error: \"Local part cannot start or end with a dot\",\n      context: \"Dots are not allowed at the beginning or end of local part\"\n    };\n  }\n\n  // Strict mode validation\n  if (strictMode) {\n    const strictLocalRegex = /^[a-zA-Z0-9._-]+$/;\n    if (!strictLocalRegex.test(localPart)) {\n      return {\n        isValid: false,\n        error: \"Local part contains invalid characters\",\n        context: \"In strict mode, only letters, numbers, dots, underscores, and hyphens are allowed\"\n      };\n    }\n  } else {\n    // More permissive but still reasonable validation\n    const basicLocalRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+$/;\n    if (!basicLocalRegex.test(localPart)) {\n      return {\n        isValid: false,\n        error: \"Local part contains invalid characters\",\n        context: \"Local part contains characters that are not allowed in email addresses\"\n      };\n    }\n  }\n\n  return { isValid: true };\n}\n\n/**\n * Validates the domain part of an email address (the part after @)\n * \n * @param domainPart - The domain part to validate\n * @param allowInternational - Whether to allow international domain names\n * @param strictMode - Whether to apply strict validation rules\n * @returns EmailValidationResult for the domain part\n */\nfunction validateDomainPart(\n  domainPart: string, \n  allowInternational: boolean, \n  strictMode: boolean\n): EmailValidationResult {\n  if (!domainPart || domainPart.length === 0) {\n    return {\n      isValid: false,\n      error: \"Domain part cannot be empty\",\n      context: \"The part after @ symbol is missing\"\n    };\n  }\n\n  if (domainPart.length > 253) {\n    return {\n      isValid: false,\n      error: \"Domain part is too long\",\n      context: `Domain part length (${domainPart.length}) exceeds maximum of 253 characters`\n    };\n  }\n\n  // Check for consecutive dots\n  if (domainPart.includes('..')) {\n    return {\n      isValid: false,\n      error: \"Domain cannot contain consecutive dots\",\n      context: \"Found '..' in domain which is not allowed\"\n    };\n  }\n\n  // Check for dots at start or end\n  if (domainPart.startsWith('.') || domainPart.endsWith('.')) {\n    return {\n      isValid: false,\n      error: \"Domain cannot start or end with a dot\",\n      context: \"Dots are not allowed at the beginning or end of domain\"\n    };",
+          "tokenUsage": {
+            "total": 2070,
+            "prompt": 70,
+            "completion": 2000
+          },
+          "finishReason": "length",
+          "cost": 0.03021
+        },
+        "score": 10,
+        "success": true,
+        "testCase": {
+          "description": "Error handling quality",
+          "vars": {
+            "task": "error handling in email validator"
+          },
+          "assert": [
+            {
+              "type": "llm-rubric",
+              "value": "Does the code include:\n1. Proper error handling for invalid inputs\n2. Contextual error messages (not just \"invalid\")\n3. Input validation before processing\n\nScore out of 10. Passing score: 7+\n",
+              "provider": "anthropic:messages:claude-sonnet-4-20250514"
+            }
+          ],
+          "options": {
+            "provider": {
+              "temperature": 0.3
+            }
+          },
+          "metadata": {}
+        },
+        "testIdx": 1,
+        "vars": {
+          "task": "error handling in email validator"
+        },
         "metadata": {
           "_promptfooFileMetadata": {}
         },
         "failureReason": 0
+      },
+      {
+        "cost": 0.03021,
+        "error": "The code violates Kalpesh's coding standards in multiple ways: 1) File/function size exceeds 100 lines (the main validateEmail function alone is ~100+ lines, and the entire file is much longer), 2) While there are no wildcard imports, the code is not token efficient due to extensive comments and verbose error handling, 3) Naming is consistent with camelCase, 4) The code appears to be cut off mid-function, indicating it's incomplete and not production-ready. The verbose documentation and error handling, while thorough, make it inefficient in terms of token usage.",
+        "gradingResult": {
+          "pass": false,
+          "score": 4,
+          "reason": "The code violates Kalpesh's coding standards in multiple ways: 1) File/function size exceeds 100 lines (the main validateEmail function alone is ~100+ lines, and the entire file is much longer), 2) While there are no wildcard imports, the code is not token efficient due to extensive comments and verbose error handling, 3) Naming is consistent with camelCase, 4) The code appears to be cut off mid-function, indicating it's incomplete and not production-ready. The verbose documentation and error handling, while thorough, make it inefficient in terms of token usage.",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 2419,
+            "prompt": 2269,
+            "completion": 150,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "assertion": {
+                "type": "llm-rubric",
+                "value": "Evaluate against Kalpesh's coding standards:\n1. File/function size (<100 lines)\n2. No wildcard imports\n3. Consistent naming (camelCase)\n4. Token efficient\n5. Production-ready\n\nScore out of 10. Passing score: 8+\n",
+                "provider": "anthropic:messages:claude-sonnet-4-20250514"
+              },
+              "pass": false,
+              "score": 4,
+              "reason": "The code violates Kalpesh's coding standards in multiple ways: 1) File/function size exceeds 100 lines (the main validateEmail function alone is ~100+ lines, and the entire file is much longer), 2) While there are no wildcard imports, the code is not token efficient due to extensive comments and verbose error handling, 3) Naming is consistent with camelCase, 4) The code appears to be cut off mid-function, indicating it's incomplete and not production-ready. The verbose documentation and error handling, while thorough, make it inefficient in terms of token usage.",
+              "tokensUsed": {
+                "total": 2419,
+                "prompt": 2269,
+                "completion": 150,
+                "cached": 0,
+                "numRequests": 0,
+                "completionDetails": {
+                  "reasoning": 0,
+                  "acceptedPrediction": 0,
+                  "rejectedPrediction": 0
+                }
+              }
+            }
+          ]
+        },
+        "id": "405c099b-b483-4456-a415-c166ba7e6647",
+        "latencyMs": 25898,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Create a TypeScript function that validates email addresses.\nRequirements:\n- Must check for valid email format\n- Must handle edge cases (empty, null, malformed)\n- Must include error messages with context\n- Must be well-typed (no 'any')\n- Must include JSDoc comments\n",
+          "label": "Create a TypeScript function that validates email addresses.\nRequirements:\n- Must check for valid email format\n- Must handle edge cases (empty, null, malformed)\n- Must include error messages with context\n- Must be well-typed (no 'any')\n- Must include JSDoc comments\n"
+        },
+        "promptId": "2bc21ae4f715c667aa822814181dbb685d33c1dde23fa8d05c06bfb36c3d74ec",
+        "promptIdx": 0,
+        "provider": {
+          "id": "anthropic:messages:claude-sonnet-4-20250514",
+          "label": ""
+        },
+        "response": {
+          "output": "```typescript\n/**\n * Result type for email validation operations\n */\ninterface ValidationResult {\n  /** Whether the email is valid */\n  isValid: boolean;\n  /** Error message if validation fails, undefined if valid */\n  errorMessage?: string;\n  /** Additional context about the validation failure */\n  errorContext?: string;\n}\n\n/**\n * Configuration options for email validation\n */\ninterface EmailValidationOptions {\n  /** Maximum allowed length for the email address (default: 254) */\n  maxLength?: number;\n  /** Whether to allow quoted strings in local part (default: false) */\n  allowQuotedStrings?: boolean;\n  /** Whether to perform strict domain validation (default: true) */\n  strictDomainValidation?: boolean;\n}\n\n/**\n * Validates an email address according to RFC 5322 standards with additional practical constraints.\n * \n * This function performs comprehensive email validation including:\n * - Basic format validation using regex\n * - Length constraints (RFC compliant)\n * - Domain and local part validation\n * - Special character handling\n * - Edge case detection\n * \n * @param email - The email address to validate (can be null or undefined)\n * @param options - Optional configuration for validation behavior\n * @returns ValidationResult object containing validation status and error details\n * \n * @example\n * ```typescript\n * const result = validateEmail(\"user@example.com\");\n * if (result.isValid) {\n *   console.log(\"Email is valid!\");\n * } else {\n *   console.error(`Invalid email: ${result.errorMessage}`);\n * }\n * ```\n * \n * @example\n * ```typescript\n * // With custom options\n * const result = validateEmail(\"test@domain.co\", { maxLength: 100 });\n * ```\n */\nfunction validateEmail(\n  email: string | null | undefined, \n  options: EmailValidationOptions = {}\n): ValidationResult {\n  const {\n    maxLength = 254,\n    allowQuotedStrings = false,\n    strictDomainValidation = true\n  } = options;\n\n  // Handle null, undefined, and empty cases\n  if (email === null) {\n    return {\n      isValid: false,\n      errorMessage: \"Email cannot be null\",\n      errorContext: \"Received null value instead of string\"\n    };\n  }\n\n  if (email === undefined) {\n    return {\n      isValid: false,\n      errorMessage: \"Email cannot be undefined\",\n      errorContext: \"Received undefined value instead of string\"\n    };\n  }\n\n  if (typeof email !== 'string') {\n    return {\n      isValid: false,\n      errorMessage: \"Email must be a string\",\n      errorContext: `Received ${typeof email} instead of string`\n    };\n  }\n\n  if (email.trim().length === 0) {\n    return {\n      isValid: false,\n      errorMessage: \"Email cannot be empty\",\n      errorContext: \"Received empty string or whitespace-only string\"\n    };\n  }\n\n  const trimmedEmail = email.trim();\n\n  // Check length constraints\n  if (trimmedEmail.length > maxLength) {\n    return {\n      isValid: false,\n      errorMessage: `Email exceeds maximum length of ${maxLength} characters`,\n      errorContext: `Email length: ${trimmedEmail.length} characters`\n    };\n  }\n\n  // Basic format validation - must contain exactly one @ symbol\n  const atSymbolCount = (trimmedEmail.match(/@/g) || []).length;\n  if (atSymbolCount === 0) {\n    return {\n      isValid: false,\n      errorMessage: \"Email must contain an @ symbol\",\n      errorContext: \"Missing @ symbol separating local and domain parts\"\n    };\n  }\n\n  if (atSymbolCount > 1) {\n    return {\n      isValid: false,\n      errorMessage: \"Email cannot contain multiple @ symbols\",\n      errorContext: `Found ${atSymbolCount} @ symbols`\n    };\n  }\n\n  // Split into local and domain parts\n  const [localPart, domainPart] = trimmedEmail.split('@');\n\n  // Validate local part (before @)\n  const localValidation = validateLocalPart(localPart, allowQuotedStrings);\n  if (!localValidation.isValid) {\n    return localValidation;\n  }\n\n  // Validate domain part (after @)\n  const domainValidation = validateDomainPart(domainPart, strictDomainValidation);\n  if (!domainValidation.isValid) {\n    return domainValidation;\n  }\n\n  // If all validations pass\n  return {\n    isValid: true\n  };\n}\n\n/**\n * Validates the local part of an email address (the part before @)\n * \n * @param localPart - The local part to validate\n * @param allowQuotedStrings - Whether to allow quoted strings\n * @returns ValidationResult for the local part\n */\nfunction validateLocalPart(localPart: string, allowQuotedStrings: boolean): ValidationResult {\n  if (!localPart || localPart.length === 0) {\n    return {\n      isValid: false,\n      errorMessage: \"Email local part cannot be empty\",\n      errorContext: \"The part before @ symbol is missing\"\n    };\n  }\n\n  if (localPart.length > 64) {\n    return {\n      isValid: false,\n      errorMessage: \"Email local part exceeds 64 character limit\",\n      errorContext: `Local part length: ${localPart.length} characters`\n    };\n  }\n\n  // Check for invalid starting/ending characters\n  if (localPart.startsWith('.') || localPart.endsWith('.')) {\n    return {\n      isValid: false,\n      errorMessage: \"Email local part cannot start or end with a period\",\n      errorContext: \"Periods at the beginning or end of local part are not allowed\"\n    };\n  }\n\n  // Check for consecutive periods\n  if (localPart.includes('..')) {\n    return {\n      isValid: false,\n      errorMessage: \"Email local part cannot contain consecutive periods\",\n      errorContext: \"Found consecutive periods (..) in local part\"\n    };\n  }\n\n  // Handle quoted strings if allowed\n  if (localPart.startsWith('\"') && localPart.endsWith('\"')) {\n    if (!allowQuotedStrings) {\n      return {\n        isValid: false,\n        errorMessage: \"Quoted strings in email local part are not allowed\",\n        errorContext: \"Email contains quoted local part but allowQuotedStrings is false\"\n      };\n    }\n    // For quoted strings, we're more permissive with content validation\n    return { isValid: true };\n  }\n\n  // Validate characters in local part (unquoted)\n  const validLocalPartRegex = /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*$/;\n  if (!validLocalPartRegex.test(localPart)) {\n    return {\n      isValid: false,\n      errorMessage: \"Email local part contains invalid characters\",\n      errorContext: \"Local part contains characters not allowed in unquoted email addresses\"\n    };\n  }\n\n  return { isValid: true };\n}\n\n/**\n * Validates the domain part of an email address (the part after @)\n * \n * @param domainPart - The domain part to validate\n * @param strictValidation - Whether to perform strict domain validation\n * @returns ValidationResult for the domain part\n */\nfunction validateDomainPart(domainPart: string, strictValidation: boolean): ValidationResult {\n  if (!domainPart || domainPart.length === 0) {\n    return {\n      isValid: false,\n      errorMessage: \"Email domain part cannot be empty\",\n      errorContext: \"The part after @ symbol is missing\"\n    };\n  }\n\n  if (domainPart.length > 253) {\n    return {\n      isValid: false,\n      error",
+          "tokenUsage": {
+            "total": 2070,
+            "prompt": 70,
+            "completion": 2000
+          },
+          "finishReason": "length",
+          "cost": 0.03021
+        },
+        "score": 4,
+        "success": false,
+        "testCase": {
+          "description": "Code quality standards",
+          "vars": {
+            "task": "code quality assessment"
+          },
+          "assert": [
+            {
+              "type": "llm-rubric",
+              "value": "Evaluate against Kalpesh's coding standards:\n1. File/function size (<100 lines)\n2. No wildcard imports\n3. Consistent naming (camelCase)\n4. Token efficient\n5. Production-ready\n\nScore out of 10. Passing score: 8+\n",
+              "provider": "anthropic:messages:claude-sonnet-4-20250514"
+            }
+          ],
+          "options": {
+            "provider": {
+              "temperature": 0.3
+            }
+          },
+          "metadata": {}
+        },
+        "testIdx": 2,
+        "vars": {
+          "task": "code quality assessment"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 1
       }
     ],
     "stats": {
       "successes": 1,
-      "failures": 0,
+      "failures": 2,
       "errors": 0,
       "tokenUsage": {
-        "prompt": 0,
-        "completion": 0,
-        "cached": 351,
-        "total": 351,
-        "numRequests": 1,
+        "prompt": 210,
+        "completion": 6000,
+        "cached": 0,
+        "total": 6210,
+        "numRequests": 3,
         "completionDetails": {
           "reasoning": 0,
           "acceptedPrediction": 0,
           "rejectedPrediction": 0
         },
         "assertions": {
-          "total": 682,
-          "prompt": 0,
-          "completion": 0,
-          "cached": 682,
+          "total": 7239,
+          "prompt": 6810,
+          "completion": 429,
+          "cached": 0,
           "numRequests": 0,
           "completionDetails": {
             "reasoning": 0,
@@ -172,38 +371,84 @@
     }
   },
   "config": {
-    "description": "LLM Code Generation Quality Check",
+    "tags": {},
+    "description": "Example LLM evaluation: Email validator function",
     "prompts": [
-      "Create a simple TypeScript function that adds two numbers"
+      "Create a TypeScript function that validates email addresses.\nRequirements:\n- Must check for valid email format\n- Must handle edge cases (empty, null, malformed)\n- Must include error messages with context\n- Must be well-typed (no 'any')\n- Must include JSDoc comments\n"
     ],
     "providers": [
       {
         "id": "anthropic:messages:claude-sonnet-4-20250514",
         "config": {
           "temperature": 0.3,
-          "max_tokens": 500
+          "max_tokens": 2000
         }
       }
     ],
     "tests": [
       {
-        "description": "Basic code generation test",
+        "description": "Email validator implementation",
+        "vars": {
+          "task": "email validation function"
+        },
         "assert": [
           {
             "type": "javascript",
-            "value": "// Check if output contains function-like code\nconst hasFunction = /function|const.*=|=>/.test(output);\nconst hasReturn = /return/.test(output);\n\nreturn {\n  pass: hasFunction,\n  score: hasFunction ? 1 : 0,\n  reason: hasFunction ? \"Generated valid function code\" : \"No function found\"\n};\n"
+            "value": "const output = context.vars.output || output;\n\n// Basic syntax checks\nconst hasFunction = /function|const.*=.*\\(/i.test(output);\nconst hasValidation = /email|@/i.test(output);\n\nreturn {\n  pass: hasFunction && hasValidation,\n  score: hasFunction && hasValidation ? 1 : 0,\n  reason: hasFunction && hasValidation\n    ? \"Contains function and email validation logic\"\n    : \"Missing function or validation logic\"\n};\n"
           },
           {
             "type": "llm-rubric",
-            "value": "Does this code:\n1. Contain a function that adds two numbers?\n2. Look syntactically correct?\n3. Follow basic TypeScript conventions?\n\nScore 0-10. Pass if >= 7.\n",
+            "value": "Evaluate this code on:\n1. Does it validate email format correctly?\n2. Does it handle edge cases (null, empty, malformed)?\n3. Are error messages contextual and helpful?\n4. Is TypeScript typing strict (no 'any')?\n5. Is it token-efficient (<100 lines)?\n\nScore out of 10. Passing score: 7+\n",
+            "provider": "anthropic:messages:claude-sonnet-4-20250514"
+          }
+        ]
+      },
+      {
+        "description": "Error handling quality",
+        "vars": {
+          "task": "error handling in email validator"
+        },
+        "assert": [
+          {
+            "type": "llm-rubric",
+            "value": "Does the code include:\n1. Proper error handling for invalid inputs\n2. Contextual error messages (not just \"invalid\")\n3. Input validation before processing\n\nScore out of 10. Passing score: 7+\n",
+            "provider": "anthropic:messages:claude-sonnet-4-20250514"
+          }
+        ]
+      },
+      {
+        "description": "Code quality standards",
+        "vars": {
+          "task": "code quality assessment"
+        },
+        "assert": [
+          {
+            "type": "llm-rubric",
+            "value": "Evaluate against Kalpesh's coding standards:\n1. File/function size (<100 lines)\n2. No wildcard imports\n3. Consistent naming (camelCase)\n4. Token efficient\n5. Production-ready\n\nScore out of 10. Passing score: 8+\n",
             "provider": "anthropic:messages:claude-sonnet-4-20250514"
           }
         ]
       }
     ],
+    "scenarios": [],
+    "env": {},
     "sharing": false,
-    "outputPath": "./test-results.json",
-    "extensions": []
+    "defaultTest": {
+      "options": {
+        "provider": {
+          "temperature": 0.3
+        }
+      },
+      "vars": {},
+      "assert": [],
+      "metadata": {}
+    },
+    "outputPath": [
+      "./test-results.json"
+    ],
+    "extensions": [],
+    "metadata": {},
+    "evaluateOptions": {}
   },
   "shareableUrl": null,
   "metadata": {
@@ -211,7 +456,7 @@
     "nodeVersion": "v22.17.1",
     "platform": "darwin",
     "arch": "arm64",
-    "exportedAt": "2025-10-16T13:59:22.707Z",
-    "evaluationCreatedAt": "2025-10-16T13:59:22.575Z"
+    "exportedAt": "2025-10-17T08:23:57.209Z",
+    "evaluationCreatedAt": "2025-10-17T08:23:25.230Z"
   }
 }
