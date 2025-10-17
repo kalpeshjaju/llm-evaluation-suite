@@ -1,8 +1,8 @@
 {
-  "evalId": "eval-Bkw-2025-10-09T05:48:51",
+  "evalId": "eval-hAs-2025-10-16T13:59:22",
   "results": {
     "version": 3,
-    "timestamp": "2025-10-09T05:48:51.742Z",
+    "timestamp": "2025-10-16T13:59:22.575Z",
     "prompts": [
       {
         "raw": "Create a simple TypeScript function that adds two numbers",
@@ -16,12 +16,12 @@
           "testErrorCount": 0,
           "assertPassCount": 2,
           "assertFailCount": 0,
-          "totalLatencyMs": 7862,
+          "totalLatencyMs": 13,
           "tokenUsage": {
-            "prompt": 17,
-            "completion": 335,
-            "cached": 0,
-            "total": 352,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 351,
+            "total": 351,
             "numRequests": 1,
             "completionDetails": {
               "reasoning": 0,
@@ -29,10 +29,10 @@
               "rejectedPrediction": 0
             },
             "assertions": {
-              "total": 689,
-              "prompt": 582,
-              "completion": 107,
-              "cached": 0,
+              "total": 682,
+              "prompt": 0,
+              "completion": 0,
+              "cached": 682,
               "numRequests": 0,
               "completionDetails": {
                 "reasoning": 0,
@@ -43,23 +43,23 @@
           },
           "namedScores": {},
           "namedScoresCount": {},
-          "cost": 0.005076
+          "cost": 0.0050609999999999995
         }
       }
     ],
     "results": [
       {
-        "cost": 0.005076,
+        "cost": 0.0050609999999999995,
         "gradingResult": {
           "pass": true,
           "score": 5.5,
           "reason": "All assertions passed",
           "namedScores": {},
           "tokensUsed": {
-            "total": 689,
-            "prompt": 582,
-            "completion": 107,
-            "cached": 0,
+            "total": 682,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 682,
             "numRequests": 0
           },
           "componentResults": [
@@ -76,12 +76,12 @@
               },
               "pass": true,
               "score": 10,
-              "reason": "The output contains multiple well-formed TypeScript functions that add two numbers (regular function declaration and arrow function variants). The syntax is correct with proper TypeScript type annotations for parameters (a: number, b: number) and return types (: number). It follows TypeScript conventions including explicit typing, proper function declarations, and includes error handling. The code demonstrates good practices with clear examples and explanations. This meets all three criteria excellently.",
+              "reason": "The output contains multiple well-formed TypeScript functions that add two numbers (regular function declaration and arrow function variants). The syntax is correct with proper TypeScript type annotations for parameters (a: number, b: number) and return types (: number). It follows TypeScript conventions including type annotations, proper variable declarations with const, and includes error handling. The code demonstrates good practices and would compile without syntax errors.",
               "tokensUsed": {
-                "total": 689,
-                "prompt": 582,
-                "completion": 107,
-                "cached": 0,
+                "total": 682,
+                "prompt": 0,
+                "completion": 0,
+                "cached": 682,
                 "numRequests": 0,
                 "completionDetails": {
                   "reasoning": 0,
@@ -92,8 +92,8 @@
             }
           ]
         },
-        "id": "0b672aa3-8669-4a1e-82b4-5bb69db6fad3",
-        "latencyMs": 7862,
+        "id": "09113167-fdca-4797-a888-48e4b2837ea0",
+        "latencyMs": 13,
         "namedScores": {},
         "prompt": {
           "raw": "Create a simple TypeScript function that adds two numbers",
@@ -106,14 +106,13 @@
           "label": ""
         },
         "response": {
-          "output": "Here's a simple TypeScript function that adds two numbers:\n\n```typescript\nfunction addNumbers(a: number, b: number): number {\n    return a + b;\n}\n\n// Example usage:\nconst result = addNumbers(5, 3);\nconsole.log(result); // Output: 8\n```\n\nYou can also write it as an arrow function:\n\n```typescript\nconst addNumbers = (a: number, b: number): number => {\n    return a + b;\n};\n\n// Or even more concise:\nconst addNumbers = (a: number, b: number): number => a + b;\n\n// Example usage:\nconst result = addNumbers(10, 7);\nconsole.log(result); // Output: 17\n```\n\n**Key TypeScript features demonstrated:**\n- **Parameter types**: `a: number, b: number` - specifies that both parameters must be numbers\n- **Return type**: `: number` - specifies that the function returns a number\n- **Type safety**: TypeScript will give you an error if you try to pass non-number values\n\n**Example with error handling:**\n```typescript\nfunction addNumbers(a: number, b: number): number {\n    if (typeof a !== 'number' || typeof b !== 'number') {\n        throw new Error('Both parameters must be numbers');\n    }\n    return a + b;\n}\n```\n\nThe TypeScript compiler will catch type errors at compile time, making your code more robust!",
+          "output": "Here's a simple TypeScript function that adds two numbers:\n\n```typescript\nfunction addNumbers(a: number, b: number): number {\n    return a + b;\n}\n\n// Example usage:\nconst result = addNumbers(5, 3);\nconsole.log(result); // Output: 8\n```\n\nYou can also write it as an arrow function:\n\n```typescript\nconst addNumbers = (a: number, b: number): number => {\n    return a + b;\n};\n\n// Or even more concise:\nconst addNumbers = (a: number, b: number): number => a + b;\n\n// Example usage:\nconst result = addNumbers(10, 7);\nconsole.log(result); // Output: 17\n```\n\n**Key TypeScript features demonstrated:**\n- **Type annotations**: `a: number, b: number` specifies that both parameters must be numbers\n- **Return type annotation**: `: number` specifies that the function returns a number\n- **Type safety**: TypeScript will give you an error if you try to pass non-number values\n\n**Example with error handling:**\n```typescript\nfunction addNumbers(a: number, b: number): number {\n    if (typeof a !== 'number' || typeof b !== 'number') {\n        throw new Error('Both arguments must be numbers');\n    }\n    return a + b;\n}\n```\n\nThe TypeScript compiler will catch type errors at compile time, making your code more robust!",
           "tokenUsage": {
-            "total": 352,
-            "prompt": 17,
-            "completion": 335
+            "cached": 351,
+            "total": 351
           },
           "finishReason": "stop",
-          "cost": 0.005076
+          "cost": 0.0050609999999999995
         },
         "score": 5.5,
         "success": true,
@@ -147,10 +146,10 @@
       "failures": 0,
       "errors": 0,
       "tokenUsage": {
-        "prompt": 17,
-        "completion": 335,
-        "cached": 0,
-        "total": 352,
+        "prompt": 0,
+        "completion": 0,
+        "cached": 351,
+        "total": 351,
         "numRequests": 1,
         "completionDetails": {
           "reasoning": 0,
@@ -158,10 +157,10 @@
           "rejectedPrediction": 0
         },
         "assertions": {
-          "total": 689,
-          "prompt": 582,
-          "completion": 107,
-          "cached": 0,
+          "total": 682,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 682,
           "numRequests": 0,
           "completionDetails": {
             "reasoning": 0,
@@ -212,7 +211,7 @@
     "nodeVersion": "v22.17.1",
     "platform": "darwin",
     "arch": "arm64",
-    "exportedAt": "2025-10-09T05:49:03.977Z",
-    "evaluationCreatedAt": "2025-10-09T05:48:51.742Z"
+    "exportedAt": "2025-10-16T13:59:22.707Z",
+    "evaluationCreatedAt": "2025-10-16T13:59:22.575Z"
   }
 }
